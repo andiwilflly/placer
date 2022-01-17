@@ -1,6 +1,6 @@
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter/material.dart';
-import 'package:placer/components/map.dart';
+import 'package:placer/components/map.component.dart';
 
 class Panel extends StatefulWidget {
   @override
