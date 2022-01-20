@@ -27,8 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 
-# /usr/local/Caskroom/flutter/1.22.4/flutter
-# sudo xattr -d com.apple.quarantine /usr/local/Caskroom/flutter/1.22.4/flutter/bin/cache/artifacts/libimobiledevice/idevice_id
+# 'mongodb+srv://andiwillfly:ward121314@cluster0-etaet.mongodb.net/fly-task-tracker?retryWrites=true&w=majority'
 dependencies:
   flutter:
     sdk: flutter
@@ -42,6 +41,8 @@ dependencies:
   flutter_map_location_marker: ^2.0.0
   get: ^4.6.1
   flag: ^6.0.0
+  flutter_local_notifications: ^9.2.0
+  mongo_dart: ^0.7.4
 
 dev_dependencies:
   flutter_test:

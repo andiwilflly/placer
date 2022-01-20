@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:placer/DB/connect.db.dart';
 import 'package:placer/components/LangSelection.component.dart';
 import 'package:placer/components/Panel.component.dart';
 import 'package:placer/models/store.dart';
@@ -42,6 +43,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
+    store.notifications.init();
     WidgetsBinding.instance!.addObserver(this);
   }
 
@@ -69,7 +72,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             icon: const Icon(Icons.search),
             tooltip: 'Search'.tr,
             iconSize: 30,
-            onPressed: () {},
+            onPressed: () {
+              print('htete');
+              store.notifications.send();
+            },
           )),
       new Positioned(
           left: 15.0,
