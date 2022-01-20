@@ -1,5 +1,8 @@
+import 'package:placer/components/PreLoader.component.dart';
+import 'package:placer/models/store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:placer/components/Map.component.dart';
 
 class Panel extends StatefulWidget {
@@ -54,7 +57,7 @@ class _SlidePanel extends State<Panel> {
                 ),
               ),
             ),
-            body: Map()),
+            body: Obx(() => store.location.lat.value != 0.0 ? Map() : PreLoader())),
         length: 3);
   }
 }

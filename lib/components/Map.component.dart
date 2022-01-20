@@ -1,7 +1,7 @@
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+// import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 
 class Map extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _MapState extends State<Map> {
         maxZoom: 18,
         interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
         plugins: [
-          LocationMarkerPlugin(),
+          // LocationMarkerPlugin(),
         ],
       ),
       layers: [
@@ -30,10 +30,10 @@ class _MapState extends State<Map> {
           // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           subdomains: ['a', 'b', 'c'],
         ),
-        LocationMarkerLayerOptions(
-          marker: DefaultLocationMarker(),
-          headingSectorRadius: 70,
-        ),
+        // LocationMarkerLayerOptions(
+        //   marker: DefaultLocationMarker(),
+        //   headingSectorRadius: 70,
+        // ),
         MarkerLayerOptions(
           markers: [
             Marker(

@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
+    store.location.init();
     store.notifications.init();
     WidgetsBinding.instance!.addObserver(this);
   }
@@ -72,9 +73,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             icon: const Icon(Icons.search),
             tooltip: 'Search'.tr,
             iconSize: 30,
-            onPressed: () {
-              print('htete');
-              store.notifications.send();
+            onPressed: () async {
+              var x = await store.location.get();
+              print(x);
+              store.notifications.send('hehe', 'net?');
             },
           )),
       new Positioned(

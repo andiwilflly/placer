@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('widget.title'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -138,38 +138,37 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // Future notificationNoSound() async {
-  //
-  //   var androidPlatformChannelSpecifics =
-  //   AndroidNotificationDetails(
-  //     'Notification Channel ID',
-  //     'Channel Name',
-  //     'Description',
-  //     playSound: false,
-  //     importance: Importance.max,
-  //     priority: Priority.high,
-  //   );
-  //
-  //   var iOSPlatformChannelSpecifics =
-  //   IOSNotificationDetails(
-  //       presentSound: false
-  //   );
-  //
-  //   var platformChannelSpecifics =
-  //   NotificationDetails(
-  //       android: androidPlatformChannelSpecifics,
-  //       iOS: iOSPlatformChannelSpecifics
-  //   );
-  //
-  //   flutterNotificationPlugin.show(
-  //       0,
-  //       'New Alert',
-  //       'How to show Local Notification',
-  //       platformChannelSpecifics,
-  //       payload: 'No Sound'
-  //   );
-  //
-  // }
+  Future notificationNoSound() async {
+
+    var androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'Notification Channel ID',
+      'Channel Name',
+      playSound: false,
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    var iOSPlatformChannelSpecifics =
+    IOSNotificationDetails(
+        presentSound: false
+    );
+
+    var platformChannelSpecifics =
+    NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics
+    );
+
+    flutterNotificationPlugin.show(
+        0,
+        'New Alert',
+        'How to show Local Notification',
+        platformChannelSpecifics,
+        payload: 'No Sound'
+    );
+
+  }
   //
   // Future<void> notificationCustomSound() async{
   //

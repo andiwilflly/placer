@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class Notifications {
+class NotificationsModel {
   late FlutterLocalNotificationsPlugin flutterNotificationPlugin;
 
   init() {
@@ -18,7 +18,7 @@ class Notifications {
         onSelectNotification: onSelectNotification);
   }
 
-  send() {
+  send(String title, String text) {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'Notification Channel ID',
       'Channel Name',
@@ -32,10 +32,13 @@ class Notifications {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
 
-    print('de?');
-    flutterNotificationPlugin.show(0, 'New Alert',
-        'How to show Local Notification', platformChannelSpecifics,
-        payload: 'Default Sound');
+    flutterNotificationPlugin.show(
+        0,
+        title,
+        text,
+        platformChannelSpecifics,
+        payload: 'No Sound'
+    );
   }
 
   onSelectNotification(dynamic payload) async {
