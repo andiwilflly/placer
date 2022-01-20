@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       Responsive.isDesktop(context) ? Text('hello'.tr) : Panel(),
       new Positioned(
           right: 15.0,
-          top: 15.0,
+          top: 35.0,
           child: IconButton(
             icon: const Icon(Icons.search),
             tooltip: 'Search'.tr,
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           )),
       new Positioned(
           left: 15.0,
-          top: 15.0,
+          top: 35.0,
           child: IconButton(
             icon: const Icon(Icons.language),
             tooltip: "Select language".tr,
