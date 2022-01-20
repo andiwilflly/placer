@@ -28,7 +28,13 @@ class LocationModel {
       }
     }
 
-    get();
+    location.enableBackgroundMode(enable: true);
+
+    location.onLocationChanged.listen((LocationData currentLocation) {
+      speed.value = currentLocation.speed!;
+      lat.value = currentLocation.latitude!;
+      long.value = currentLocation.longitude!;
+    });
   }
 
   get() async {
