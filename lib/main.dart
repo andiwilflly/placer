@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
-import 'package:placer/DB/connect.db.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:placer/components/LangSelection.component.dart';
 import 'package:placer/components/Panel.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
 import 'package:placer/utils/responsive.utils.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   store.lang.setLang(Get.deviceLocale.toString());
   runApp(const MyApp());
 }
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Hidden places',
+      title: 'placer',
       theme: ThemeData(primarySwatch: Colors.blue),
       translations: Messages(),
       locale: Get.deviceLocale,
@@ -69,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       new Positioned(
           right: 55.0,
           top: 50.0,
-          child: Obx(() => Text(store.location.lat.value.toString()))),
+          child: Obx(() => Text(store.map.zoom.value.toString()))),
       new Positioned(
           right: 15.0,
           top: 35.0,
@@ -81,6 +83,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               var x = await store.location.get();
               print(x);
               store.notifications.send('hehe', 'net?');
+            },
+          )),
+      new Positioned(
+          right: 15.0,
+          top: 85.0,
+          child: IconButton(
+            icon: const Icon(Icons.api),
+            iconSize: 30,
+            onPressed: () {
+              store.map.controller.move(
+                LatLng(store.location.lat.value, store.location.long.value),
+                15
+              );
             },
           )),
       new Positioned(
