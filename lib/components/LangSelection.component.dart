@@ -26,6 +26,7 @@ class LangSelection extends StatelessWidget {
                 title: new Text(store.lang.languages[lang]['name']),
                 onTap: () {
                   store.lang.setLang(lang);
+                  Navigator.pop(context);
                   Get.updateLocale(store.lang.languages[lang]['code']);
                 },
               ))
