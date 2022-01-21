@@ -16,6 +16,7 @@ class LocationModel {
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
+        print('location | no _serviceEnabled');
         return;
       }
     }
@@ -24,26 +25,32 @@ class LocationModel {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
+        print('location | no _permissionGranted');
         return;
       }
     }
 
-    location.enableBackgroundMode(enable: true);
+    //location.enableBackgroundMode(enable: true);
 
     location.onLocationChanged.listen((LocationData currentLocation) {
       speed.value = currentLocation.speed!;
       lat.value = currentLocation.latitude!;
       long.value = currentLocation.longitude!;
     });
+
+    get();
   }
 
   get() async {
+    print('123');
     var l = await location.getLocation();
 
+    print('erew');
     speed.value = l.speed!;
     lat.value = l.latitude!;
     long.value = l.longitude!;
 
+    print(lat);
     return l;
   }
 }

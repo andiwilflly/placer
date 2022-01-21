@@ -66,10 +66,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return new Scaffold(
         body: new Stack(children: <Widget>[
       Responsive.isDesktop(context) ? Text('hello'.tr) : Panel(),
-          new Positioned(
-              right: 55.0,
-              top: 50.0,
-              child: Obx(()=> Text(store.location.lat.value.toString()))),
+      new Positioned(
+          right: 55.0,
+          top: 50.0,
+          child: Obx(() => Text(store.location.lat.value.toString()))),
       new Positioned(
           right: 15.0,
           top: 35.0,
