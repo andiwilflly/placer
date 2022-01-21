@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:placer/components/LangSelection.component.dart';
+import 'package:placer/components/MapControlButtons.component.dart';
 import 'package:placer/components/Panel.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
@@ -66,53 +65,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: new Stack(children: <Widget>[
+        body: Stack(children: <Widget>[
       Responsive.isDesktop(context) ? Text('hello'.tr) : Panel(),
-      new Positioned(
-          right: 55.0,
-          top: 50.0,
-          child: Obx(() => Text(store.map.zoom.value.toString()))),
-      new Positioned(
-          right: 15.0,
-          top: 35.0,
-          child: IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Search'.tr,
-            iconSize: 30,
-            onPressed: () async {
-              var x = await store.location.get();
-              print(x);
-              store.notifications.send('hehe', 'net?');
-            },
-          )),
-      new Positioned(
-          right: 15.0,
-          top: 85.0,
-          child: IconButton(
-            icon: const Icon(Icons.api),
-            iconSize: 30,
-            onPressed: () {
-              store.map.controller.move(
-                LatLng(store.location.lat.value, store.location.long.value),
-                15
-              );
-            },
-          )),
-      new Positioned(
-          left: 15.0,
-          top: 35.0,
-          child: IconButton(
-            icon: const Icon(Icons.language),
-            tooltip: "Select language".tr,
-            iconSize: 30,
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return LangSelection();
-                  });
-            },
-          )),
+      MapControlButtons()
     ]));
   }
 }

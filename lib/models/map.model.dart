@@ -4,7 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 class MapModel {
   late MapController controller;
 
-  RxDouble zoom = 14.0.obs;
+  RxDouble zoom = 16.0.obs;
 
   void updateController(MapController mapController) {
     controller = mapController;

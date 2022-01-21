@@ -30,6 +30,7 @@ class _MapState extends State<Map> {
             ],
             onPositionChanged: (MapPosition, bool) {
               store.map.updateZoom(MapPosition.zoom!);
+              print(store.map.zoom.value);
             }),
         layers: [
           TileLayerOptions(
