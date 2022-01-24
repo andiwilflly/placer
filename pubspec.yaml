@@ -46,6 +46,7 @@ dependencies:
   location: ^4.3.0
   get_storage: ^2.0.3
   firebase_core: ^1.11.0
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:

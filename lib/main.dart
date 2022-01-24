@@ -6,6 +6,7 @@ import 'package:placer/components/Panel.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
 import 'package:placer/utils/responsive.utils.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   await GetStorage.init();
@@ -48,6 +49,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     store.location.init();
     store.notifications.init();
     WidgetsBinding.instance!.addObserver(this);
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   @override
@@ -59,6 +65,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     super.dispose();
   }
 

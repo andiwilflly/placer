@@ -20,7 +20,8 @@ class _MapState extends State<Map> {
       FlutterMap(
         mapController: store.map.controller,
         options: MapOptions(
-            center: LatLng(store.location.lat.value, store.location.long.value),
+            // center: LatLng(store.location.lat.value, store.location.long.value),
+            center: LatLng(50.4402216, 30.5170319),
             zoom: store.map.zoom.value,
             minZoom: 12,
             maxZoom: 18,
@@ -51,8 +52,7 @@ class _MapState extends State<Map> {
               Marker(
                 width: 20.0,
                 height: 20.0,
-                point:
-                    LatLng(store.location.lat.value, store.location.long.value),
+                point: LatLng(50.4402216, 30.5170319),
                 builder: (ctx) => Container(
                   child: FlutterLogo(),
                 ),

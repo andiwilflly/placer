@@ -8,8 +8,6 @@ import 'package:placer/components/LangSelection.component.dart';
 class MapControlButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(store.lang.lang.toString());
-    print(store.lang.languages[store.lang.lang.toString()]);
     return Stack(children: <Widget>[
       new Positioned(
           right: 15.0,
@@ -40,8 +38,8 @@ class MapControlButtons extends StatelessWidget {
           child: IconButton(
             icon: Flag.fromCode(
               store.lang.languages[store.lang.lang.toString()]['icon'],
-              height: 25,
-              width: 30,
+              height: 20,
+              width: 25,
               fit: BoxFit.fill,
               borderRadius: 5,
             ),

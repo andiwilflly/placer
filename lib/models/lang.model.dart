@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class LangModel {
   Map languages = {
-    'en_EN': {'icon': FlagsCode.GB, 'name': 'EN', 'code': Locale('en', 'US')},
+    'en_US': {'icon': FlagsCode.GB, 'name': 'EN', 'code': Locale('en', 'US')},
     'uk_UA': {'icon': FlagsCode.UA, 'name': 'UA', 'code': Locale('ua', 'UA')},
     'ru_RU': {'icon': FlagsCode.RU, 'name': 'RU', 'code': Locale('ru', 'RU')}
   };

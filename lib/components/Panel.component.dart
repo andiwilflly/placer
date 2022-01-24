@@ -1,4 +1,6 @@
 import 'package:placer/components/PreLoader.component.dart';
+import 'package:placer/components/Search.component.dart';
+import 'package:placer/components/place/PlaceCard.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter/material.dart';
@@ -20,44 +22,41 @@ class _SlidePanel extends State<Panel> {
     return DefaultTabController(
         child: SlidingUpPanel(
             controller: panelController,
-            minHeight: 80,
-            maxHeight: deviceHeight / 100 * 80,
-            snapPoint: 0.5,
+            minHeight: 100,
+            maxHeight: deviceHeight * 0.8,
+            // snapPoint: 0.5,
             color: Colors.white,
             renderPanelSheet: true,
-            parallaxEnabled: true,
+            panelSnapping: true,
+            // parallaxEnabled: true,
             onPanelClosed: () {},
-            margin: EdgeInsets.only(left: 2, right: 2),
+            margin: EdgeInsets.only(left: 0, right: 0),
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             panel: Container(
-              transform: Matrix4.translationValues(0.0, -40.0, 0.0),
-              child: Scaffold(
-                backgroundColor: Colors.transparent,
-                appBar: AppBar(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    bottom: TabBar(
-                      onTap: (index) {},
-                      indicatorColor: Colors.white,
-                      unselectedLabelColor: Colors.black26,
-                      labelColor: Colors.black,
-                      tabs: [
-                        Tab(icon: Icon(Icons.list, size: 30)),
-                        Tab(icon: Icon(Icons.settings, size: 30)),
-                        Tab(icon: Icon(Icons.person, size: 30)),
-                      ],
-                    )),
-                body: TabBarView(
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.directions_car),
-                    Icon(Icons.settings),
-                    Icon(Icons.person),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                      child: Container(
+                          height: 5,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.black26)),
+                    )
                   ],
                 ),
-              ),
+                Search(),
+                SizedBox(height: 10),
+                PlaceCard()
+              ]),
             ),
-            body: Obx(() => store.location.lat.value != 0.0 ? Map() : PreLoader())),
+            body: Obx(
+                () => store.location.lat.value != 0.0 ? Map() : PreLoader())),
         length: 3);
   }
 }
