@@ -12,16 +12,43 @@ class CreatePolygonMap extends StatelessWidget {
         SizedBox(height: 10),
         Row(children: [
           Expanded(
-            flex: 3,
-            child: Input(hintText: 'Latitude'.tr, onChanged: (text) {}),
+            flex: 2,
+            child: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Input(hintText: 'Latitude'.tr, onChanged: (text) {})),
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Input(hintText: 'Longitude'.tr, onChanged: (text) {})),
           ),
           Expanded(
             flex: 3,
-            child: Input(hintText: 'Longitude'.tr, onChanged: (text) {}),
+            child: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.white,
+                      backgroundColor: Colors.teal,
+                    ),
+                    onPressed: () {},
+                    icon: Icon(Icons.search),
+                    label: Text("Search".tr))),
           ),
           Expanded(
-            flex: 6,
-            child: SizedBox.shrink(),
+            flex: 5,
+            child: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Colors.teal,
+                  ),
+                  onPressed: () {},
+                  icon: Icon(Icons.search),
+                  label: Text("Draw polygon".tr),
+                )),
           ),
         ]),
         SizedBox(height: 10),

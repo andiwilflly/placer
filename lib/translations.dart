@@ -10,6 +10,7 @@ class Messages extends Translations {
           'Please enter some text': 'Please enter some text',
           'Latitude': 'Latitude',
           'Longitude': 'Longitude',
+          'Draw polygon': 'Draw polygon',
         },
         'ru_RU': {
           'Search': 'Поиск',
@@ -18,6 +19,7 @@ class Messages extends Translations {
           'Please enter some text': 'Введите какой-то текст',
           'Latitude': 'Широта',
           'Longitude': 'Долгота',
+          'Draw polygon': 'Рисовать полигон',
         },
         'ua_UA': {
           'Search': 'Пошук',
@@ -26,6 +28,7 @@ class Messages extends Translations {
           'Please enter some text': 'Введiть якийсь текст',
           'Latitude': 'Широта',
           'Longitude': 'Довгота',
+          'Draw polygon': 'Малювати полiгон',
         }
       };
 }
