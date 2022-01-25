@@ -23,6 +23,7 @@ class Input extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
+          labelText: hintText.tr, // Added this
           hintText: hintText.tr, // Added this
           contentPadding: EdgeInsets.only(left: 10, top: 10), // Added this
         ),

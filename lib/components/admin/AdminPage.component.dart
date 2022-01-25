@@ -9,26 +9,28 @@ class AdminPage extends StatelessWidget {
   Widget build(BuildContext context) {
     JsonEncoder encoder = new JsonEncoder.withIndent('  ');
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-          // It takes 5/6 part of the screen
-          flex: 3,
-          child: PlaceForm(),
-        ),
-        Expanded(
-          // It takes 5/6 part of the screen
-          flex: 3,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: Obx(() => Text(encoder.convert(placesFormModel.form))),
-              )
-            ],
-          ),
-        ),
-      ],
-    );
+    return SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  flex: 4,
+                  child: PlaceForm(),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10, left: 10),
+                        child: Obx(() => Text(encoder.convert(placesFormModel.form))),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            )));
   }
 }

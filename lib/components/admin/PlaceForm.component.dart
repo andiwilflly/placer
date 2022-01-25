@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placer/components/_parts/Input.component.dart';
+import 'package:placer/components/admin/CreatePolygonMap.component.dart';
 import 'package:placer/models/placeForm.model.dart';
 import 'package:placer/models/store.dart';
 
@@ -22,31 +23,22 @@ class PlaceFormState extends State<PlaceForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
+          CreatePolygonMap(),
+          SizedBox(height: 30),
           for (var fieldName in placesFormModel.form.keys)
             Column(children: [
               placesFormModel.form[fieldName] is RxMap
-                  ? placesFormModel.form[fieldName].length != 0
-                      ? Column(children: [
-                          for (var subName in placesFormModel.form[fieldName].keys)
-                            Padding(
-                                padding: EdgeInsets.only(top: 5, bottom: 5),
-                                child: Input(
-                                    hintText: '$fieldName/$subName',
-                                    onChanged: (text) {
-                                      placesFormModel.form[fieldName]![subName] = text;
-                                    }))
-                        ])
-                      : Column(children: [
-                          for (var lang in store.lang.languages.keys)
-                            Padding(
-                              padding: EdgeInsets.only(top: 5, bottom: 5),
-                              child: Input(
-                                  hintText: '$fieldName/$lang',
-                                  onChanged: (text) {
-                                    placesFormModel.form[fieldName]![lang] = text;
-                                  }),
-                            )
-                        ])
+                  ? Column(children: [
+                      for (var lang in store.lang.languages.keys)
+                        Padding(
+                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          child: Input(
+                              hintText: '$fieldName/$lang',
+                              onChanged: (text) {
+                                placesFormModel.form[fieldName]![lang] = text;
+                              }),
+                        )
+                    ])
                   : Padding(
                       padding: EdgeInsets.only(top: 20),
                       child: Input(
@@ -56,30 +48,6 @@ class PlaceFormState extends State<PlaceForm> {
                             // print(placesForm);
                           }))
             ]),
-
-          // SizedBox(height: 20),
-          // for (var lang in store.lang.languages.keys)
-          //   Column(children: [
-          //     SizedBox(height: 5),
-          //     Input(
-          //         hintText: 'Name ($lang)',
-          //         onChanged: (text) {
-          //           // placesForm["name"]![lang] = text;
-          //           // print(placesForm);
-          //         })
-          //   ]),
-          // SizedBox(height: 20),
-          // for (var lang in store.lang.languages.keys)
-          //   Column(children: [
-          //     SizedBox(height: 5),
-          //     Input(
-          //         hintText: 'Description ($lang)',
-          //         maxLines: 5,
-          //         onChanged: (text) {
-          //           // placesForm["description"]![lang] = text;
-          //           // print(placesForm);
-          //         })
-          //   ]),
           SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {
