@@ -20,7 +20,12 @@ class AdminPage extends StatelessWidget {
           // It takes 5/6 part of the screen
           flex: 3,
           child: Column(
-            children: [Obx(() => Text(encoder.convert(placesFormModel.form)))],
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 50),
+                child: Obx(() => Text(encoder.convert(placesFormModel.form))),
+              )
+            ],
           ),
         ),
       ],

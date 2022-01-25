@@ -24,13 +24,12 @@ class PlaceFormState extends State<PlaceForm> {
         children: <Widget>[
           for (var fieldName in placesFormModel.form.keys)
             Column(children: [
-              SizedBox(height: 20),
               placesFormModel.form[fieldName] is RxMap
                   ? placesFormModel.form[fieldName].length != 0
                       ? Column(children: [
                           for (var subName in placesFormModel.form[fieldName].keys)
                             Padding(
-                                padding: EdgeInsets.only(top: 10),
+                                padding: EdgeInsets.only(top: 5, bottom: 5),
                                 child: Input(
                                     hintText: '$fieldName/$subName',
                                     onChanged: (text) {
@@ -40,7 +39,7 @@ class PlaceFormState extends State<PlaceForm> {
                       : Column(children: [
                           for (var lang in store.lang.languages.keys)
                             Padding(
-                              padding: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.only(top: 5, bottom: 5),
                               child: Input(
                                   hintText: '$fieldName/$lang',
                                   onChanged: (text) {
@@ -48,12 +47,14 @@ class PlaceFormState extends State<PlaceForm> {
                                   }),
                             )
                         ])
-                  : Input(
-                      hintText: fieldName,
-                      onChanged: (text) {
-                        // placesForm["name"]![lang] = text;
-                        // print(placesForm);
-                      })
+                  : Padding(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Input(
+                          hintText: fieldName,
+                          onChanged: (text) {
+                            // placesForm["name"]![lang] = text;
+                            // print(placesForm);
+                          }))
             ]),
 
           // SizedBox(height: 20),
