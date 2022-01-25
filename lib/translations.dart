@@ -11,6 +11,7 @@ class Messages extends Translations {
           'Latitude': 'Latitude',
           'Longitude': 'Longitude',
           'Draw polygon': 'Draw polygon',
+          'Remove polygon': 'Remove polygon',
         },
         'ru_RU': {
           'Search': 'Поиск',
@@ -20,6 +21,7 @@ class Messages extends Translations {
           'Latitude': 'Широта',
           'Longitude': 'Долгота',
           'Draw polygon': 'Рисовать полигон',
+          'Remove polygon': 'Удалить полигон',
         },
         'ua_UA': {
           'Search': 'Пошук',
@@ -29,6 +31,7 @@ class Messages extends Translations {
           'Latitude': 'Широта',
           'Longitude': 'Довгота',
           'Draw polygon': 'Малювати полiгон',
+          'Remove polygon': 'Видалити полiгон',
         }
       };
 }

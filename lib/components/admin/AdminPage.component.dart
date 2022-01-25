@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:placer/components/admin/CreatePolygonMap.component.dart';
 import 'package:placer/components/admin/PlaceForm.component.dart';
 import 'package:placer/models/placeForm.model.dart';
 import 'dart:convert';
