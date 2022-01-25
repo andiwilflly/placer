@@ -5,15 +5,21 @@ class Messages extends Translations {
   Map<String, Map<String, String>> get keys => {
         'en_US': {
           'Search': 'Search',
+          'Submit': 'Submit',
           'Select language': 'Select language',
+          'Please enter some text': 'Please enter some text',
         },
         'ru_RU': {
           'Search': 'Поиск',
+          'Submit': 'Сохранить',
           'Select language': 'Выбрать язык',
+          'Please enter some text': 'Введите какой-то текст',
         },
         'ua_UA': {
           'Search': 'Пошук',
+          'Submit': 'Зберегти',
           'Select language': 'Вибрати мову',
+          'Please enter some text': 'Введiть якийсь текст',
         }
       };
 }

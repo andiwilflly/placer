@@ -3,10 +3,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:placer/components/MapControlButtons.component.dart';
 import 'package:placer/components/Panel.component.dart';
+import 'package:placer/components/admin/AdminPage.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
 import 'package:placer/utils/responsive.utils.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   await GetStorage.init();
@@ -79,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return new Scaffold(
         body: Stack(children: <Widget>[
-      Responsive.isDesktop(context) ? Text('hello'.tr) : Panel(),
-      MapControlButtons()
+      kIsWeb ? AdminPage() : Panel(),
+      kIsWeb ? Column(children: <Widget>[]) : MapControlButtons()
     ]));
   }
 }
