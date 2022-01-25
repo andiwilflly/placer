@@ -45,7 +45,6 @@ class LocationModel {
     print('123');
     var l = await location.getLocation();
 
-    print('erew');
     speed.value = l.speed!;
     lat.value = l.latitude!;
     long.value = l.longitude!;
