@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -90,10 +90,14 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                   maxZoom: 18.25,
                   interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                   plugins: [],
-                  onTap: (TapPosition, LatLng) {
-                    print(LatLng);
+                  onTap: (TapPosition, latLng) {
+                    print(latLng.latitude);
+                    print(latLng.longitude);
+                    print(json.encode(LatLng(latLng.longitude, latLng.latitude)));
+                    print(json.encode(latLng));
+
                     setState(() {
-                      _polygon.add(LatLng);
+                      _polygon.add(latLng);
                     });
                     placesFormModel.form['polygon'] = _polygon;
                   },
@@ -105,15 +109,14 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                 TileLayerOptions(
                   urlTemplate:
                       'https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=SV4PDbJaQYJ2HfGi9vzA',
-                      // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      // 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+                  // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  // 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
                   subdomains: ['a', 'b', 'c'],
                   attributionBuilder: (_) {
                     return Obx(() => Text(form['lat'].toString() + ' / ' + form['long'].toString()));
                   },
                 ),
-                PolygonLayerOptions(
-                    polygons: [Polygon(points: _polygon, color: form['polygonColor'])]),
+                PolygonLayerOptions(polygons: [Polygon(points: _polygon, color: form['polygonColor'])]),
                 MarkerLayerOptions(
                   markers: [
                     for (var latLng in _polygon)
