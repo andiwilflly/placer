@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:placer/components/Layout.component.dart';
+import 'package:placer/components/pages/AdminPage.component.dart';
 import 'package:placer/components/pages/HomePage.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
@@ -81,7 +82,7 @@ class RouterState extends State<Router> with WidgetsBindingObserver {
         initialRoute: '/home',
         getPages: [
           GetPage(name: '/home', page: () => Layout(children: HomePage())),
-          GetPage(name: '/admin', page: () => Layout(children: HomePage())),
+          GetPage(name: '/admin', page: () => Layout(children: AdminPage()))
         ]);
   }
 }

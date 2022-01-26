@@ -12,7 +12,7 @@ class AdminPage extends StatelessWidget {
 
     return SingleChildScrollView(
         child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.only(top: 100, left: 20, right: 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

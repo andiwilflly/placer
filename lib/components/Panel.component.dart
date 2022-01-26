@@ -31,22 +31,19 @@ class _SlidePanel extends State<Panel> {
             // parallaxEnabled: true,
             onPanelClosed: () {},
             margin: EdgeInsets.only(left: 0, right: 0),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             panel: Container(
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                       child: Container(
                           height: 5,
                           width: 40,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.black26)),
+                              borderRadius: BorderRadius.circular(10), color: Colors.black26)),
                     )
                   ],
                 ),
@@ -55,8 +52,9 @@ class _SlidePanel extends State<Panel> {
                 PlaceCard()
               ]),
             ),
-            body: Obx(
-                () => store.location.lat.value != 0.0 ? Map() : PreLoader())),
+            body: Obx(() => store.location.lat.value != 0.0
+                ? Map()
+                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [PreLoader()]))),
         length: 3);
   }
 }

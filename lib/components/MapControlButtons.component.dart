@@ -32,27 +32,6 @@ class MapControlButtons extends StatelessWidget {
                   store.map.zoom.value);
             },
           )),
-      new Positioned(
-          left: 15.0,
-          top: 35.0,
-          child: IconButton(
-            icon: Flag.fromCode(
-              store.lang.languages[store.lang.lang.toString()]['icon'],
-              height: 20,
-              width: 25,
-              fit: BoxFit.fill,
-              borderRadius: 5,
-            ),
-            tooltip: "Select language".tr,
-            iconSize: 30,
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return LangSelection();
-                  });
-            },
-          ))
     ]);
   }
 }

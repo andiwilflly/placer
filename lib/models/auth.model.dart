@@ -6,6 +6,7 @@ FirebaseAuth auth = FirebaseAuth.instance;
 
 class AuthModel {
   RxBool isAuth = false.obs;
+  RxBool isAdmin = true.obs;
 
 
   void firebaseAuthStateChanges() {
