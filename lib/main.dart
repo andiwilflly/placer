@@ -2,15 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
-import 'package:placer/components/Login.component.dart';
-import 'package:placer/components/MapControlButtons.component.dart';
-import 'package:placer/components/Panel.component.dart';
-import 'package:placer/components/admin/AdminPage.component.dart';
+import 'package:placer/components/Layout.component.dart';
+import 'package:placer/components/pages/HomePage.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-
 import 'firebase_options.dart';
 
 void main() async {
@@ -31,28 +27,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'placer',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      translations: Messages(),
-      locale: Get.deviceLocale,
-      // translations will be displayed in that locale
-      fallbackLocale: Locale('ua', 'UA'),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return Router();
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+class Router extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Router> createState() => RouterState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+class RouterState extends State<Router> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -88,14 +72,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => store.isProjectReady == true
-        ? store.auth.isAuth == true
-            ? Scaffold(
-                body: Stack(children: <Widget>[
-                kIsWeb ? AdminPage() : Panel(),
-                kIsWeb ? Column(children: <Widget>[]) : MapControlButtons()
-              ]))
-            : LoginPage()
-        : Center(child: CircularProgressIndicator()));
+    return GetMaterialApp(
+        title: 'placer.io',
+        theme: ThemeData(primarySwatch: Colors.orange),
+        translations: Messages(),
+        locale: Get.deviceLocale,
+        fallbackLocale: Locale('uk', 'UA'),
+        initialRoute: '/home',
+        getPages: [
+          GetPage(name: '/home', page: () => Layout(children: HomePage())),
+          GetPage(name: '/admin', page: () => Layout(children: HomePage())),
+        ]);
   }
 }
