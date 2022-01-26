@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:placer/components/_parts/Input.component.dart';
-import 'package:placer/components/admin/CreatePolygonMap.component.dart';
 import 'package:placer/models/placeForm.model.dart';
 import 'package:placer/models/store.dart';
 
@@ -23,7 +22,6 @@ class PlaceFormState extends State<PlaceForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          CreatePolygonMap(),
           SizedBox(height: 30),
           for (var fieldName in placesFormModel.form.keys)
             Column(children: [

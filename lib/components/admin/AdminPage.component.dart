@@ -18,7 +18,10 @@ class AdminPage extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   flex: 4,
-                  child: PlaceForm(),
+                  child: Column(children: [
+                    CreatePolygonMap(),
+                    PlaceForm()
+                  ]),
                 ),
                 Expanded(
                   flex: 2,
