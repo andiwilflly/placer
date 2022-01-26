@@ -48,6 +48,9 @@ dependencies:
   firebase_core: ^1.11.0
   carousel_slider: ^4.0.0
   flutter_json_viewer: ^1.0.1
+  firebase_auth: ^3.3.5
+  firebase_auth_web: ^3.3.6
+  flutter_login: ^3.1.0
 
 dev_dependencies:
   flutter_test:
