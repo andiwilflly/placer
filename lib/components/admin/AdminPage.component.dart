@@ -29,7 +29,7 @@ class AdminPage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: 10, left: 10),
-                        child: Obx(() => Text(encoder.convert(placesFormModel.form))),
+                        child: Obx(() => SelectableText(encoder.convert(placesFormModel.form))),
                       )
                     ],
                   ),

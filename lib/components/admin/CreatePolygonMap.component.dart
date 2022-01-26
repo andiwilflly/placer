@@ -14,11 +14,11 @@ class CreatePolygonMap extends StatefulWidget {
 class CreatePolygonMapState extends State<CreatePolygonMap> {
   late MapController controller;
   late List<LatLng> _polygon;
-  late List<LatLng> _markers;
+  late bool _isShowMarkers;
 
   RxMap form = {
-    'lat': 32.3078,
-    'long': -64.7505,
+    'lat': placesFormModel.form['polygon'][0].latitude,
+    'long': placesFormModel.form['polygon'][0].longitude,
     'isDrawPolygon': false,
     'polygonColor': Colors.amberAccent.withOpacity(0.4),
     'polygonDotColor': Colors.orange,
@@ -31,6 +31,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
 
     setState(() {
       _polygon = placesFormModel.form['polygon'];
+      _isShowMarkers = true;
     });
   }
 
@@ -86,7 +87,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
               options: MapOptions(
                   center: LatLng(form['lat'], form['long']),
                   zoom: 16,
-                  maxZoom: 18,
+                  maxZoom: 18.25,
                   interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                   plugins: [],
                   onTap: (TapPosition, LatLng) {
@@ -103,7 +104,9 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
               layers: [
                 TileLayerOptions(
                   urlTemplate:
-                      'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+                      'https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=SV4PDbJaQYJ2HfGi9vzA',
+                      // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      // 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
                   subdomains: ['a', 'b', 'c'],
                   attributionBuilder: (_) {
                     return Obx(() => Text(form['lat'].toString() + ' / ' + form['long'].toString()));
@@ -115,8 +118,8 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                   markers: [
                     for (var latLng in _polygon)
                       Marker(
-                        width: form['polygonDotSize'],
-                        height: form['polygonDotSize'],
+                        width: _isShowMarkers == true ? form['polygonDotSize'] : 0,
+                        height: _isShowMarkers == true ? form['polygonDotSize'] : 0,
                         point: latLng,
                         builder: (ctx) => Container(
                           decoration: BoxDecoration(
@@ -136,7 +139,21 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
           children: [
             Expanded(
               flex: 1,
-              child: Row(children: []),
+              child: Row(children: [
+                OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Colors.blueGrey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isShowMarkers = !_isShowMarkers;
+                    });
+                  },
+                  icon: Icon(Icons.place),
+                  label: _isShowMarkers == true ? Text("Hide markers".tr) : Text("Show markers".tr),
+                )
+              ]),
             ),
             Expanded(
               flex: 1,

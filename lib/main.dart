@@ -2,12 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:placer/components/Login.component.dart';
 import 'package:placer/components/MapControlButtons.component.dart';
 import 'package:placer/components/Panel.component.dart';
 import 'package:placer/components/admin/AdminPage.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
-import 'package:placer/utils/responsive.utils.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -88,10 +88,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        body: Stack(children: <Widget>[
-      kIsWeb ? AdminPage() : Panel(),
-      kIsWeb ? Column(children: <Widget>[]) : MapControlButtons()
-    ]));
+    return Obx(() => store.isProjectReady == true
+        ? store.auth.isAuth == true
+            ? Scaffold(
+                body: Stack(children: <Widget>[
+                kIsWeb ? AdminPage() : Panel(),
+                kIsWeb ? Column(children: <Widget>[]) : MapControlButtons()
+              ]))
+            : LoginPage()
+        : Center(child: CircularProgressIndicator()));
   }
 }
