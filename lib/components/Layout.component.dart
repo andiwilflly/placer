@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flag/flag.dart';
 import 'package:placer/components/LangSelection.component.dart';
 import 'package:placer/components/Login.component.dart';
+import 'package:placer/components/_parts/PreLoader.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -57,29 +58,29 @@ class Layout extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Get.currentRoute == '/home' ? Get.toNamed('/admin') : Get.toNamed('/home');
+                    Get.currentRoute == '/home' ? Get.toNamed('/admin') : Get.back();
                   },
                 ),
               ),
             )
           : Column(children: [])),
-    Obx(() => new Positioned(
-        left: store.auth.isAdmin.value == true && kIsWeb == true ? 170 : 100,
-        top: 45.0,
-        child: CircleAvatar(
-          radius: 20,
-          backgroundColor: Colors.blueGrey,
-          child: IconButton(
-            icon: Icon(
-              Icons.logout,
-              color: Colors.white,
+      Obx(() => new Positioned(
+            left: store.auth.isAdmin.value == true && kIsWeb == true ? 170 : 100,
+            top: 45.0,
+            child: CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.blueGrey,
+              child: IconButton(
+                icon: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  store.auth.logOut();
+                },
+              ),
             ),
-            onPressed: () {
-              store.auth.logOut();
-            },
-          ),
-        ),
-      ))
+          ))
     ]);
   }
 
@@ -88,6 +89,10 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Obx(() => store.auth.isAuth.value == true ? renderAuthPage(context) : LoginPage()));
+        body: Obx(() => store.isProjectReady == true
+            ? store.auth.isAuth.value == true
+                ? renderAuthPage(context)
+                : LoginPage()
+            : PreLoader()));
   }
 }

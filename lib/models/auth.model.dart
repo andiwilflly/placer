@@ -18,12 +18,14 @@ class AuthModel {
         print('FIREBASE | User is signed in!');
         logIn(user);
       }
+      print('setProjectReady');
       store.setProjectReady();
     });
   }
 
   void logIn(User firebaseUser) {
     isAuth.value = true;
+    print('login');
   }
 
   void logOut() async {

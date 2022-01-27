@@ -1,4 +1,4 @@
-import 'package:placer/components/PreLoader.component.dart';
+import 'package:placer/components/_parts/PreLoader.component.dart';
 import 'package:placer/components/Search.component.dart';
 import 'package:placer/components/place/PlaceCard.component.dart';
 import 'package:placer/models/store.dart';
@@ -52,9 +52,7 @@ class _SlidePanel extends State<Panel> {
                 PlaceCard()
               ]),
             ),
-            body: Obx(() => store.location.lat.value != 0.0
-                ? Map()
-                : Row(mainAxisAlignment: MainAxisAlignment.center, children: [PreLoader()]))),
+            body: Obx(() => store.location.lat.value != 0.0 ? Map() : PreLoader())),
         length: 3);
   }
 }
