@@ -10,6 +10,7 @@ import 'package:placer/translations.dart';
 import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 
+// flutter build web --web-renderer html/canvaskit
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

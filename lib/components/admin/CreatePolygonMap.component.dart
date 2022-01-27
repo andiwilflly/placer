@@ -20,8 +20,8 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
     'lat': placesFormModel.form['polygon'][0].latitude,
     'long': placesFormModel.form['polygon'][0].longitude,
     'isDrawPolygon': false,
-    'polygonColor': Colors.amberAccent.withOpacity(0.4),
-    'polygonDotColor': Colors.orange,
+    'polygonColor': Colors.blue.withOpacity(0.4),
+    'polygonDotColor': Colors.blue,
     'polygonDotSize': 2,
   }.obs;
 
@@ -37,6 +37,8 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         SizedBox(height: 10),
@@ -81,7 +83,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
         ]),
         SizedBox(height: 10),
         ConstrainedBox(
-            constraints: BoxConstraints(minHeight: 400, maxHeight: 400),
+            constraints: BoxConstraints(minHeight: deviceHeight * 0.5, maxHeight: deviceHeight * 0.5),
             child: FlutterMap(
               mapController: controller,
               options: MapOptions(
