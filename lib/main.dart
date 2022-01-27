@@ -75,6 +75,7 @@ class RouterState extends State<Router> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'placer.io',
         theme: ThemeData(primarySwatch: Colors.orange),
         translations: Messages(),

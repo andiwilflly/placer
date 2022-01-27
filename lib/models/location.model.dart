@@ -42,7 +42,6 @@ class LocationModel {
   }
 
   get() async {
-    print('123');
     var l = await location.getLocation();
 
     speed.value = l.speed!;
