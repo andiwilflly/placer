@@ -1,5 +1,5 @@
 import 'package:placer/components/_parts/PreLoader.component.dart';
-import 'package:placer/components/Search.component.dart';
+import 'package:placer/components/_parts/Search.component.dart';
 import 'package:placer/components/place/PlaceCard.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';

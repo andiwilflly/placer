@@ -93,15 +93,13 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                   interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                   plugins: [],
                   onTap: (TapPosition, latLng) {
-                    print(latLng.latitude);
-                    print(latLng.longitude);
-                    print(json.encode(LatLng(latLng.longitude, latLng.latitude)));
-                    print(json.encode(latLng));
-
                     setState(() {
                       _polygon.add(latLng);
                     });
-                    placesFormModel.form['polygon'] = _polygon;
+                    placesFormModel.form['polygon'] = [
+                      ...placesFormModel.form['polygon'],
+                      LatLng(latLng.longitude, latLng.latitude) // Swap lat/long to correct display after [json.encode]
+                    ];
                   },
                   onPositionChanged: (MapPosition, bool) {
                     // form['lat'] = MapPosition.center?.latitude;
