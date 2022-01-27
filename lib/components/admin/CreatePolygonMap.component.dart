@@ -39,6 +39,11 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
 
+    placesFormModel.form.listen((form) {
+      print(form['polygon']);
+      // TODO: set state here _polygon
+    });
+
     return Column(
       children: [
         SizedBox(height: 10),

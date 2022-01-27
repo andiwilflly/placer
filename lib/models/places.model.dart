@@ -12,4 +12,18 @@ class PlacesModel {
     print('places:');
     print(jsonResponse);
   }
+
+
+  create(IPlace place) async {
+    var response = await http.post(Uri.parse('fetchUrl'), body: place);
+    var jsonResponse = convert.jsonDecode(response.body);
+  }
+}
+
+
+class IPlace {
+  Map<String, String> name = {};
+  Map<String, String> description = {};
+  List<String> images = [];
+  List<String> videos = [];
 }
