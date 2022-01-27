@@ -17,8 +17,8 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
   late bool _isShowMarkers;
 
   RxMap form = {
-    'lat': placesFormModel.form['polygon'][0].latitude,
-    'long': placesFormModel.form['polygon'][0].longitude,
+    'lat': placesFormModel.getPolygon()[0].latitude,
+    'long': placesFormModel.getPolygon()[0].longitude,
     'isDrawPolygon': false,
     'polygonColor': Colors.blue.withOpacity(0.4),
     'polygonDotColor': Colors.blue,
@@ -30,7 +30,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
     controller = MapController();
 
     setState(() {
-      _polygon = placesFormModel.form['polygon'];
+      _polygon = placesFormModel.getPolygon();
       _isShowMarkers = true;
     });
   }
@@ -98,7 +98,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                     });
                     placesFormModel.form['polygon'] = [
                       ...placesFormModel.form['polygon'],
-                      LatLng(latLng.longitude, latLng.latitude) // Swap lat/long to correct display after [json.encode]
+                      [latLng.latitude, latLng.longitude] // Swap lat/long to correct display after [json.encode]
                     ];
                   },
                   onPositionChanged: (MapPosition, bool) {
@@ -141,25 +141,23 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
         Row(
           children: [
             Expanded(
-              flex: 1,
-              child: Row(children: [
-                OutlinedButton.icon(
-                  style: OutlinedButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: Colors.blueGrey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isShowMarkers = !_isShowMarkers;
-                    });
-                  },
-                  icon: Icon(Icons.place),
-                  label: _isShowMarkers == true ? Text("Hide markers".tr) : Text("Show markers".tr),
-                )
-              ]),
+              flex: 2,
+              child: OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  primary: Colors.white,
+                  backgroundColor: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isShowMarkers = !_isShowMarkers;
+                  });
+                },
+                icon: Icon(Icons.place),
+                label: _isShowMarkers == true ? Text("Hide markers".tr) : Text("Show markers".tr),
+              ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Obx(() => placesFormModel.form['polygon'].length != 0
                   ? OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
@@ -167,7 +165,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                         backgroundColor: Colors.red,
                       ),
                       onPressed: () {
-                        placesFormModel.form['polygon'].clear();
+                        placesFormModel.form['polygon'] = [];
                         setState(() {
                           _polygon = [];
                         });
@@ -177,8 +175,27 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                     )
                   : Row(children: [])),
             ),
+            Expanded(
+              flex: 1,
+              child: Obx(() => placesFormModel.form['polygon'].length != 0
+                  ? OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.blueAccent,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _polygon.removeLast();
+                        });
+                        placesFormModel.form['polygon'].removeLast();
+                      },
+                      icon: Icon(Icons.undo),
+                      label: Text("Undo".tr),
+                    )
+                  : Row(children: [])),
+            )
           ],
-        )
+        ),
       ],
     );
   }

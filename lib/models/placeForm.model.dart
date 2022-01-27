@@ -7,15 +7,21 @@ class PlacesFormModel {
     "description": {}.obs,
     "images": [].obs,
     "videos": [].obs,
-    'polygon': <LatLng>[
-      LatLng(50.44632057975247, 30.52289108708404,),
-      LatLng(50.44608817297772, 30.523457302861544),
-      LatLng(50.44651842560935, 30.52389568097548),
-      LatLng(50.446753503282174, 30.523334583277652)
+    'polygon': [
+      [50.446321642234395, 30.52288921384348],
+      [50.44608769792714, 30.523456969374383],
+      [50.44651564116533, 30.523899375695166],
+      [50.446752618152146, 30.523332360099406]
     ].obs
   }.obs;
 
   update(String key, value) {}
+
+  List<LatLng> getPolygon() {
+    List<dynamic> polygon =
+        form['polygon'].map((List<double> latLng) => LatLng(latLng[0], latLng[1])).toList();
+    return new List<LatLng>.from(polygon);
+  }
 }
 
 final placesFormModel = PlacesFormModel();
