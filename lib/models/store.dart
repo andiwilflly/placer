@@ -3,6 +3,7 @@ import 'package:placer/models/auth.model.dart';
 import "package:placer/models/lang.model.dart";
 import 'package:placer/models/location.model.dart';
 import 'package:placer/models/map.model.dart';
+import 'package:placer/models/places.model.dart';
 import 'package:placer/notifications/init.notifications.dart';
 
 class Store {
@@ -17,6 +18,7 @@ class Store {
   final lang = LangModel();
   final location = LocationModel();
   final map = MapModel();
+  final places = PlacesModel();
 
   void setIsAppInForeground(bool isForeground) {
     isAppInForeground.value = isForeground;

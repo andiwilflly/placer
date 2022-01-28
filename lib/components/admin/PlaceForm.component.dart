@@ -50,6 +50,9 @@ class PlaceFormState extends State<PlaceForm> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                print('here!');
+                print(placesFormModel.form);
+                store.places.create(placesFormModel.form);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Processing Data')),
                 );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flag/flag.dart';
 import 'package:placer/components/place/PlaceCarousel.component.dart';
 import 'package:placer/models/store.dart';

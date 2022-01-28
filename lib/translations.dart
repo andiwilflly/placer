@@ -14,6 +14,7 @@ class Messages extends Translations {
           'Remove polygon': 'Remove polygon',
           'Show markers': 'Show markers',
           'Hide markers': 'Hide markers',
+          'Undo': 'Undo',
         },
         'ru_RU': {
           'Search': 'Поиск',
@@ -26,6 +27,7 @@ class Messages extends Translations {
           'Remove polygon': 'Удалить полигон',
           'Show markers': 'Показать маркеры',
           'Hide markers': 'Скрыть маркеры',
+          'Undo': 'Отменить',
         },
         'ua_UA': {
           'Search': 'Пошук',
@@ -38,6 +40,7 @@ class Messages extends Translations {
           'Remove polygon': 'Видалити полiгон',
           'Show markers': 'Показати маркери',
           'Hide markers': 'Сховати маркери',
+          'Undo': 'Вiдмiнити',
         }
       };
 }
