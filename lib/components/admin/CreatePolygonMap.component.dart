@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:placer/components/_parts/Input.component.dart';
+import 'package:placer/components/place/PlaceMarker.interface.dart';
 import 'package:placer/models/placeForm.model.dart';
 
 class CreatePolygonMap extends StatefulWidget {
@@ -13,7 +14,8 @@ class CreatePolygonMap extends StatefulWidget {
 
 class CreatePolygonMapState extends State<CreatePolygonMap> {
   late MapController controller;
-  late List<LatLng> _polygon;
+
+  // late List<LatLng> _polygon;
   late bool _isShowMarkers;
 
   RxMap form = {
@@ -30,7 +32,6 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
     controller = MapController();
 
     setState(() {
-      _polygon = placesFormModel.getPolygon();
       _isShowMarkers = true;
     });
   }
@@ -38,11 +39,6 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
-
-    placesFormModel.form.listen((form) {
-      print(form['polygon']);
-      // TODO: set state here _polygon
-    });
 
     return Column(
       children: [
@@ -89,59 +85,66 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
         SizedBox(height: 10),
         ConstrainedBox(
             constraints: BoxConstraints(minHeight: deviceHeight * 0.5, maxHeight: deviceHeight * 0.5),
-            child: FlutterMap(
-              mapController: controller,
-              options: MapOptions(
-                  center: LatLng(form['lat'], form['long']),
-                  zoom: 16,
-                  maxZoom: 18.25,
-                  interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-                  plugins: [],
-                  onTap: (TapPosition, latLng) {
-                    setState(() {
-                      _polygon.add(latLng);
-                    });
-                    placesFormModel.form['polygon'] = [
-                      ...placesFormModel.form['polygon'],
-                      [latLng.latitude, latLng.longitude] // Swap lat/long to correct display after [json.encode]
-                    ];
-                  },
-                  onPositionChanged: (MapPosition, bool) {
-                    // form['lat'] = MapPosition.center?.latitude;
-                    // form['long'] = MapPosition.center?.longitude;
-                  }),
-              layers: [
-                TileLayerOptions(
-                  urlTemplate:
-                      'https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=SV4PDbJaQYJ2HfGi9vzA',
-                  // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  // 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
-                  attributionBuilder: (_) {
-                    return Obx(() => Text(form['lat'].toString() + ' / ' + form['long'].toString()));
-                  },
-                ),
-                PolygonLayerOptions(polygons: [Polygon(points: _polygon, color: form['polygonColor'])]),
-                MarkerLayerOptions(
-                  markers: [
-                    for (var latLng in _polygon)
-                      Marker(
-                        width: _isShowMarkers == true ? form['polygonDotSize'] : 0,
-                        height: _isShowMarkers == true ? form['polygonDotSize'] : 0,
-                        point: latLng,
-                        builder: (ctx) => Container(
-                          decoration: BoxDecoration(
-                              color: form['polygonDotColor'],
-                              border: Border.all(
-                                color: form['polygonDotColor'],
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(form['polygonDotSize']))),
-                        ),
-                      ),
+            child: Obx(() => FlutterMap(
+                  mapController: controller,
+                  options: MapOptions(
+                      center: LatLng(form['lat'], form['long']),
+                      zoom: 16,
+                      maxZoom: 18.25,
+                      interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+                      plugins: [],
+                      onTap: (TapPosition, latLng) {
+                        placesFormModel.form['polygon'].add([latLng.latitude, latLng.longitude]);
+                      },
+                      onPositionChanged: (MapPosition, bool) {
+                        // form['lat'] = MapPosition.center?.latitude;
+                        // form['long'] = MapPosition.center?.longitude;
+                      }),
+                  layers: [
+                    TileLayerOptions(
+                      urlTemplate:
+                          'https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=SV4PDbJaQYJ2HfGi9vzA',
+                      // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      // 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+                      subdomains: ['a', 'b', 'c'],
+                      attributionBuilder: (_) {
+                        return Obx(() => Text(form['lat'].toString() + ' / ' + form['long'].toString()));
+                      },
+                    ),
+                    PolygonLayerOptions(polygons: [
+                      Polygon(points: placesFormModel.getPolygon(), color: form['polygonColor'])
+                    ]),
+                    MarkerLayerOptions(
+                      markers: placesFormModel.form['polygon'].length == 1
+                          ? [
+                              IPlaceMarker(
+                                  id: 'ID',
+                                  title: 'NAME',
+                                  vicinity: "vicinity",
+                                  lat: placesFormModel.form['polygon'][0][0],
+                                  long: placesFormModel.form['polygon'][0][1],
+                                  icon: Icons.place)
+                            ]
+                          : [
+                              for (var latLng in placesFormModel.form['polygon'])
+                                Marker(
+                                  width: _isShowMarkers == true ? form['polygonDotSize'] : 0,
+                                  height: _isShowMarkers == true ? form['polygonDotSize'] : 0,
+                                  point: LatLng(latLng[0], latLng[1]),
+                                  builder: (ctx) => Container(
+                                    decoration: BoxDecoration(
+                                        color: form['polygonDotColor'],
+                                        border: Border.all(
+                                          color: form['polygonDotColor'],
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(form['polygonDotSize']))),
+                                  ),
+                                ),
+                            ],
+                    ),
                   ],
-                ),
-              ],
-            )),
+                ))),
         SizedBox(height: 10),
         Row(
           children: [
@@ -170,10 +173,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                         backgroundColor: Colors.red,
                       ),
                       onPressed: () {
-                        placesFormModel.form['polygon'] = [];
-                        setState(() {
-                          _polygon = [];
-                        });
+                        placesFormModel.form['polygon'].clear();
                       },
                       icon: Icon(Icons.delete),
                       label: Text("Remove polygon".tr),
@@ -189,9 +189,6 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                         backgroundColor: Colors.blueAccent,
                       ),
                       onPressed: () {
-                        setState(() {
-                          _polygon.removeLast();
-                        });
                         placesFormModel.form['polygon'].removeLast();
                       },
                       icon: Icon(Icons.undo),
