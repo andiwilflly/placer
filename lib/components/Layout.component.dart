@@ -45,7 +45,7 @@ class Layout extends StatelessWidget {
                       icon: Icon(
                           Get.currentRoute == '/home' ? Icons.admin_panel_settings : Icons.map_outlined),
                       onPressed: () {
-                        Get.currentRoute == '/home' ? Get.toNamed('/admin') : Get.back();
+                        Get.currentRoute == '/home' ? Get.offAllNamed('/admin') : Get.offAllNamed('/home');
                       })
                   : Column(children: [])),
               Obx(() => store.auth.isAuth == true

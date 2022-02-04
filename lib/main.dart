@@ -86,8 +86,8 @@ class RouterState extends State<Router> with WidgetsBindingObserver {
         fallbackLocale: Locale('uk', 'UA'),
         initialRoute: '/home',
         getPages: [
-          GetPage(name: '/home', page: () => Layout(children: HomePage())),
-          GetPage(name: '/admin', page: () => Layout(children: AdminPage()))
+          GetPage(name: '/home', page: () => Layout(children: HomePage()), transition: Transition.native),
+          GetPage(name: '/admin', page: () => Layout(children: AdminPage()), transition: Transition.native)
         ]);
   }
 }
