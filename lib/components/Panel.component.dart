@@ -13,12 +13,23 @@ class Panel extends StatefulWidget {
 }
 
 class _SlidePanel extends State<Panel> {
+  late final selectedPlaceIdDisposer;
   PanelController panelController = new PanelController();
 
   @override
   void initState() {
     store.places.getAll();
     super.initState();
+
+    selectedPlaceIdDisposer = store.selectedPlaceId.listen((String? selectedPlaceId) {
+      panelController.animatePanelToPosition(selectedPlaceId == '' ? 0 : 0.4);
+    });
+  }
+
+  @override
+  void dispose() {
+    selectedPlaceIdDisposer.cancel();
+    super.dispose();
   }
 
   @override
@@ -30,7 +41,7 @@ class _SlidePanel extends State<Panel> {
             controller: panelController,
             minHeight: 30,
             maxHeight: deviceHeight * 0.8,
-            snapPoint: 0.3,
+            // snapPoint: 0.3,
             color: Colors.white,
             renderPanelSheet: true,
             panelSnapping: true,
