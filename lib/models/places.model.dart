@@ -26,6 +26,7 @@ class PlacesModel {
     var jsonResponse = convert.jsonDecode(response.body);
 
     print('places:');
+    print(jsonResponse.length);
     for (var place in jsonResponse) {
       all.write(place['_id'], place);
     }
@@ -68,7 +69,6 @@ class PlacesModel {
   List<Marker> get markers {
     return List<Marker>.from(store.places.all.getKeys().where(filterMarkers).map((placeId) {
       final place = store.places.all.read(placeId);
-      print(place);
       return IPlaceMarker(
           id: place['_id'],
           title: place['name'][store.lang.lang.value],

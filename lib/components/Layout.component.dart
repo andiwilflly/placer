@@ -5,6 +5,7 @@ import 'package:placer/components/LangSelection.component.dart';
 import 'package:placer/components/Login.component.dart';
 import 'package:placer/components/_parts/LangIcon.component.dart';
 import 'package:placer/components/_parts/PreLoader.component.dart';
+import 'package:placer/components/place/PlacesSearch.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -28,6 +29,16 @@ class Layout extends StatelessWidget {
             leading: LangIcon(),
             elevation: 0,
             actions: [
+              IconButton(
+                  splashRadius: 0.1,
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    print('saerch');
+                    showSearch(
+                      context: context,
+                      delegate: PlacesSearch(),
+                    );
+                  }),
               Obx(() => store.auth.isAdmin.value == true && kIsWeb == true
                   ? IconButton(
                       splashRadius: 0.1,
