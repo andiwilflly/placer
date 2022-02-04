@@ -26,6 +26,7 @@ class Layout extends StatelessWidget {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          title: Obx(()=> Text(store.selectedPlaceId.value)),
             leading: LangIcon(),
             elevation: 0,
             actions: [

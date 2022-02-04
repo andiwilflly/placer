@@ -29,7 +29,7 @@ class _MapState extends State<Map> {
                 interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                 plugins: [],
                 onTap: (tapPos, LatLng latLng) {
-                  print(store.places.getClickedPolygon(latLng));
+                  store.setSelectedPlaceId(store.places.getPlaceIdByLatLng(latLng));
                 },
                 onPositionChanged: (MapPosition, bool) {
                   //store.map.updateZoom(MapPosition.zoom!);

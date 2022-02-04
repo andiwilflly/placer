@@ -10,6 +10,8 @@ class Store {
   RxBool isProjectReady = false.obs;
   RxBool isAppInForeground = true.obs;
 
+  RxString selectedPlaceId = ''.obs;
+
   // Local notifications
   final notifications = NotificationsModel();
 
@@ -19,6 +21,10 @@ class Store {
   final location = LocationModel();
   final map = MapModel();
   final places = PlacesModel();
+
+  void setSelectedPlaceId(String? placeId) {
+    selectedPlaceId.value = placeId != null ? placeId : '';
+  }
 
   void setIsAppInForeground(bool isForeground) {
     isAppInForeground.value = isForeground;

@@ -1,5 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
@@ -54,10 +55,18 @@ class PlacesModel {
     return store.places.all.read(placeId)['polygon'].length == 1;
   }
 
-  Polygon? getClickedPolygon(LatLng latLng) {
-    return store.places.polygons.firstWhereOrNull((Polygon polygon) {
-      return isPointInPolygon(latLng, polygon);
-    });
+  String? getPlaceIdByLatLng(LatLng latLng) {
+    final String placeId = all.getKeys().firstWhere((placeId) {
+      final place = all.read(placeId);
+      return isPointInPolygon(
+          latLng,
+          Polygon(
+              points: List<LatLng>.from(
+                  place['polygon'].map((point) => LatLng(point[0], point[1])).toList()),
+              color: Colors.red));
+    }, orElse: () => null);
+
+    return placeId;
   }
 
   List<Polygon> get polygons {
@@ -87,7 +96,9 @@ class PlacesModel {
   }
 }
 
+
 class IPlace {
+  String _id = '';
   Map<String, String> name = {};
   Map<String, String> description = {};
   String address = '';
