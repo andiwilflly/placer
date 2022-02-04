@@ -9,6 +9,7 @@ import 'package:placer/components/place/PlaceMarker.component.dart';
 import 'dart:convert' as convert;
 
 import 'package:placer/models/store.dart';
+import 'package:placer/utils/isPointInPolygon.utils.dart';
 
 final String? HOST = dotenv.env['SERVER_HOST'];
 final String? PORT = dotenv.env['SERVER_PORT'];
@@ -51,6 +52,12 @@ class PlacesModel {
 
   bool filterMarkers(String placeId) {
     return store.places.all.read(placeId)['polygon'].length == 1;
+  }
+
+  Polygon? getClickedPolygon(LatLng latLng) {
+    return store.places.polygons.firstWhereOrNull((Polygon polygon) {
+      return isPointInPolygon(latLng, polygon);
+    });
   }
 
   List<Polygon> get polygons {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:placer/models/store.dart';
+import 'package:placer/utils/isPointInPolygon.utils.dart';
 
 class Map extends StatefulWidget {
   @override
@@ -27,6 +28,9 @@ class _MapState extends State<Map> {
                 maxZoom: 18,
                 interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                 plugins: [],
+                onTap: (tapPos, LatLng latLng) {
+                  print(store.places.getClickedPolygon(latLng));
+                },
                 onPositionChanged: (MapPosition, bool) {
                   //store.map.updateZoom(MapPosition.zoom!);
                   // print(store.map.zoom.value);

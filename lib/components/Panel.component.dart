@@ -28,9 +28,9 @@ class _SlidePanel extends State<Panel> {
     return DefaultTabController(
         child: SlidingUpPanel(
             controller: panelController,
-            minHeight: 100,
+            minHeight: 30,
             maxHeight: deviceHeight * 0.8,
-            // snapPoint: 0.5,
+            snapPoint: 0.3,
             color: Colors.white,
             renderPanelSheet: true,
             panelSnapping: true,
@@ -54,8 +54,7 @@ class _SlidePanel extends State<Panel> {
                     )
                   ],
                 ),
-                Search(),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 PlaceCard()
               ]),
             )),
