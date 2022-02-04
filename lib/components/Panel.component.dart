@@ -59,7 +59,7 @@ class _SlidePanel extends State<Panel> {
                 PlaceCard()
               ]),
             )),
-            body: Obx(() => store.location.lat.value != 0.0 ? Map() : PreLoader())),
+            body: Obx(() => store.location.lat.value != 0.0 ? Map() : Map())),
         length: 3);
   }
 }

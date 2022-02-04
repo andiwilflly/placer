@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:placer/components/place/PlaceMarker.component.dart';
 import 'dart:convert' as convert;
 
 import 'package:placer/models/store.dart';
@@ -43,9 +44,18 @@ class PlacesModel {
     print('creada? ~$jsonResponse');
   }
 
-  List<Polygon> getPolygons() {
+  bool filterPolygons(String placeId) {
+    return store.places.all.read(placeId)['polygon'].length > 1;
+  }
+
+  bool filterMarkers(String placeId) {
+    return store.places.all.read(placeId)['polygon'].length == 1;
+  }
+
+  List<Polygon> get polygons {
     return List<Polygon>.from(store.places.all
         .getKeys()
+        .where(filterPolygons)
         .map((placeId) => Polygon(
             points: List<LatLng>.from(store.places.all
                 .read(placeId)['polygon']
@@ -53,6 +63,20 @@ class PlacesModel {
                 .toList()),
             color: Colors.red))
         .toList());
+  }
+
+  List<Marker> get markers {
+    return List<Marker>.from(store.places.all.getKeys().where(filterMarkers).map((placeId) {
+      final place = store.places.all.read(placeId);
+      print(place);
+      return IPlaceMarker(
+          id: place['_id'],
+          title: place['name'][store.lang.lang.value],
+          vicinity: "vicinity",
+          lat: place['polygon'][0][0],
+          long: place['polygon'][0][1],
+          icon: Icons.place);
+    }).toList());
   }
 }
 
