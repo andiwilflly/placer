@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:placer/components/_parts/Input.component.dart';
-import 'package:placer/components/place/PlaceMarker.interface.dart';
+import 'package:placer/components/place/PlaceMarker.component.dart';
 import 'package:placer/models/placeForm.model.dart';
 
 class CreatePolygonMap extends StatefulWidget {

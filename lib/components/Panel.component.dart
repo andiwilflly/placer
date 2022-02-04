@@ -38,7 +38,8 @@ class _SlidePanel extends State<Panel> {
             onPanelClosed: () {},
             margin: EdgeInsets.only(left: 0, right: 0),
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-            panel: Container(
+            panel: SingleChildScrollView(
+                child: Container(
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +58,7 @@ class _SlidePanel extends State<Panel> {
                 SizedBox(height: 10),
                 PlaceCard()
               ]),
-            ),
+            )),
             body: Obx(() => store.location.lat.value != 0.0 ? Map() : PreLoader())),
         length: 3);
   }
