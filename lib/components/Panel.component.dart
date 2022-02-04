@@ -16,6 +16,12 @@ class _SlidePanel extends State<Panel> {
   PanelController panelController = new PanelController();
 
   @override
+  void initState() {
+    store.places.getAll();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var deviceHeight = MediaQuery.of(context).size.height;
 

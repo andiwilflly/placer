@@ -2,7 +2,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:placer/models/store.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 
 class Map extends StatefulWidget {
   @override
@@ -26,9 +25,7 @@ class _MapState extends State<Map> {
             minZoom: 12,
             maxZoom: 18,
             interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-            plugins: [
-              //LocationMarkerPlugin(),
-            ],
+            plugins: [],
             onPositionChanged: (MapPosition, bool) {
               store.map.updateZoom(MapPosition.zoom!);
               print(store.map.zoom.value);
@@ -36,17 +33,13 @@ class _MapState extends State<Map> {
         layers: [
           TileLayerOptions(
             // urlTemplate: 'http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-            urlTemplate:
-                'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+            urlTemplate: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
             // 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
             // 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
             // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             subdomains: ['a', 'b', 'c'],
           ),
-          // LocationMarkerLayerOptions(
-          //   marker: DefaultLocationMarker(),
-          //   headingSectorRadius: 70,
-          // ),
+          PolygonLayerOptions(polygons: store.places.getPolygons()),
           MarkerLayerOptions(
             markers: [
               Marker(
