@@ -1,18 +1,23 @@
-class Place {
-  String id;
-  Map<String, String> name;
-  Map<String, String> description;
-  String address;
-  List<String> images = [];
-  List<String> videos = [];
-  List<List<double>> polygon;
+import 'package:get/get.dart';
 
-  Place(
+class IPlace extends GetxController {
+  String id;
+  Map<String, dynamic> name;
+  Map<String, dynamic> description;
+  String address;
+  List<dynamic> images = [];
+  List<dynamic> videos = [];
+  List<dynamic> polygon;
+
+  bool isSelected;
+
+  IPlace(
       {required this.id,
       required this.name,
       required this.description,
       required this.address,
       required this.images,
       required this.videos,
-      required this.polygon});
+      required this.polygon,
+      this.isSelected = false});
 }

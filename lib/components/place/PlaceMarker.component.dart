@@ -19,7 +19,7 @@ class IPlaceMarker extends Marker {
           point: LatLng(lat, long),
           builder: (BuildContext ctx) => GestureDetector(
             onTap: () {
-              store.setSelectedPlaceId(id);
+              store.places.selectPlace(id);
               // Get.back();
               // Get.snackbar(
               //   title,

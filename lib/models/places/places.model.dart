@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:placer/components/place/PlaceMarker.component.dart';
+import 'package:placer/models/places/place.model.dart';
 import 'dart:convert' as convert;
 import 'package:placer/models/store.dart';
 import 'package:placer/utils/isPointInPolygon.utils.dart';
@@ -13,11 +14,19 @@ final String? HOST = 'http://localhost';
 // final String? PORT = DotEnv().env['SERVER_PORT'];
 final String? PORT = '4000';
 
-class PlacesModel extends GetxController {
-  final RxMap all = {}.obs;
+class PlacesModel {
+  final RxList all = [].obs;
+
+  find(String placeId) => all.firstWhere((place) => place.value.id == placeId, orElse: () => null);
 
   get selectedPlace {
-    return all[store.selectedPlaceId.value];
+    return all.firstWhere((place) => place.value.isSelected, orElse: () => null);
+  }
+
+  dynamic selectPlace(String? placeId) {
+    all.forEach((place) {
+      place.update((place) => place.isSelected = place.id == placeId);
+    });
   }
 
   void getAll() async {
@@ -32,10 +41,18 @@ class PlacesModel extends GetxController {
     print('places:');
     print(jsonResponse.length);
 
-    all.addAll(Map.fromIterable(jsonResponse, key: (place) => place['_id'], value: (place) => place));
-    // for (var place in jsonResponse) {
-    //   all[place['_id']];
-    // }
+    for (var placeObj in jsonResponse) {
+      final Rx<IPlace> place = IPlace(
+        id: placeObj['_id'],
+        name: placeObj['name'],
+        description: placeObj['description'],
+        address: placeObj['address'],
+        images: placeObj['images'],
+        videos: placeObj['videos'],
+        polygon: placeObj['polygon'],
+      ).obs;
+      all.add(place);
+    }
   }
 
   create(RxMap<dynamic, dynamic> place) async {
@@ -51,58 +68,35 @@ class PlacesModel extends GetxController {
     print('creada? ~$jsonResponse');
   }
 
-  bool filterPolygons(dynamic placeId) {
-    return all[placeId]['polygon'].length > 1;
-  }
+  bool filterPolygons(dynamic place) => place.value.polygon.length > 1;
+  bool filterMarkers(dynamic place) => place.value.polygon.length == 1;
 
-  bool filterMarkers(dynamic placeId) {
-    return all[placeId]['polygon'].length == 1;
-  }
+  Polygon toPolygon(Rx<IPlace> place) => Polygon(
+      points: List<LatLng>.from(place.value.polygon.map((point) => LatLng(point[0], point[1])).toList()),
+      color: Colors.red);
 
   String? getPlaceIdByLatLng(LatLng latLng) {
-    final String placeId = all.value.keys.firstWhere((placeId) {
-      final place = all[placeId];
-      return isPointInPolygon(
-          latLng,
-          Polygon(
-              points: List<LatLng>.from(
-                  place['polygon'].map((point) => LatLng(point[0], point[1])).toList()),
-              color: Colors.red));
+    final place = all.firstWhere((place) {
+      return isPointInPolygon(latLng, toPolygon(place));
     }, orElse: () => null);
-
-    return placeId;
+    return place == null ? null : place.value.id;
   }
 
   List<Polygon> get polygons {
-    return List<Polygon>.from(all.value.keys
-        .where(filterPolygons)
-        .map((placeId) => Polygon(
-            points: List<LatLng>.from(
-                all[placeId]['polygon'].map((point) => LatLng(point[0], point[1])).toList()),
-            color: Colors.red))
-        .toList());
+    return List<Polygon>.from(all.where(filterPolygons).map((place) {
+      return toPolygon(place);
+    }).toList());
   }
 
   List<Marker> get markers {
-    return List<Marker>.from(all.value.keys.where(filterMarkers).map((placeId) {
-      final place = store.places.all[placeId];
+    return List<Marker>.from(all.where(filterMarkers).map((place) {
       return IPlaceMarker(
-          id: place['_id'],
-          title: place['name'][store.lang.lang.value],
+          id: place.value.id,
+          title: place.value.name[store.lang.lang.value],
           vicinity: "vicinity",
-          lat: place['polygon'][0][0],
-          long: place['polygon'][0][1],
+          lat: place.value.polygon[0][0],
+          long: place.value.polygon[0][1],
           icon: Icons.place);
     }).toList());
   }
-}
-
-class IPlace {
-  String _id = '';
-  Map<String, String> name = {};
-  Map<String, String> description = {};
-  String address = '';
-  List<String> images = [];
-  List<String> videos = [];
-  List<List<double>> polygon = [];
 }

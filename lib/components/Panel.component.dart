@@ -21,14 +21,14 @@ class _SlidePanel extends State<Panel> {
     store.places.getAll();
     super.initState();
 
-    selectedPlaceIdDisposer = store.selectedPlaceId.listen((String? selectedPlaceId) {
-      panelController.animatePanelToPosition(selectedPlaceId == '' ? 0 : 0.4);
-    });
+    // selectedPlaceIdDisposer = store.places.selectedPlace.listen((selectedPlace) {
+    //   panelController.animatePanelToPosition(selectedPlace == null ? 0 : 0.4);
+    // });
   }
 
   @override
   void dispose() {
-    selectedPlaceIdDisposer.cancel();
+    // selectedPlaceIdDisposer.cancel();
     super.dispose();
   }
 
@@ -63,15 +63,16 @@ class _SlidePanel extends State<Panel> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10), color: Colors.black26)),
                     ),
-                    Obx(() => store.selectedPlaceId == '' ? Column() : PlaceCard['Header'] )
+                    Obx(() => store.places.selectedPlace == null ? Column() : PlaceCard['Header'])
                   ],
                 )),
             panel: Padding(
                 padding: EdgeInsets.only(top: minPanelHeight),
                 child: SingleChildScrollView(
                     child: Container(
-                  child: Obx(() =>
-                      store.selectedPlaceId == '' ? Column() : Column(children: [PlaceCard['Body']])),
+                  child: Obx(() => store.places.selectedPlace == null
+                      ? Column()
+                      : Column(children: [PlaceCard['Body']])),
                 ))),
             body: Obx(() => store.location.lat.value != 0.0 ? Map() : Map())),
         length: 3);

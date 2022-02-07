@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:placer/models/places.model.dart';
+import 'package:placer/models/places/places.model.dart';
 
 class PlacesFormModel {
   RxMap form = {

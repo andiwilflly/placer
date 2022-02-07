@@ -26,7 +26,9 @@ class Layout extends StatelessWidget {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Obx(()=> Text(store.selectedPlaceId.value)),
+            title: Obx(() => store.places.selectedPlace == null
+                ? Text('no place selected')
+                : Text(store.places.selectedPlace.value.id)),
             leading: LangIcon(),
             elevation: 0,
             actions: [
@@ -46,7 +48,9 @@ class Layout extends StatelessWidget {
                       icon: Icon(
                           Get.currentRoute == '/home' ? Icons.admin_panel_settings : Icons.map_outlined),
                       onPressed: () {
-                        Get.currentRoute == '/home' ? Get.offAllNamed('/admin') : Get.offAllNamed('/home');
+                        Get.currentRoute == '/home'
+                            ? Get.offAllNamed('/admin')
+                            : Get.offAllNamed('/home');
                       })
                   : Column(children: [])),
               Obx(() => store.auth.isAuth == true

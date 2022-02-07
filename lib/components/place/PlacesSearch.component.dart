@@ -37,7 +37,7 @@ class PlacesSearch extends SearchDelegate {
   }
 
   Widget search(String query) {
-    final names = store.places.all.value.values.map((place) {
+    final names = store.places.all.map((place) {
       return place['name'][store.lang.lang.value];
     }).toList();
 
@@ -50,8 +50,7 @@ class PlacesSearch extends SearchDelegate {
         itemCount: results.length,
         itemBuilder: (context, index) {
           final placeIndex = results[index].matches[0].arrayIndex;
-          final place = store.places.all.value.values.toList();
-          print(place);
+          print(store.places.all[placeIndex]);
           return ListTile(
             title: Text('Title'),
           );

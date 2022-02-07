@@ -8,18 +8,14 @@ import 'package:placer/models/store.dart';
 class PlaceCardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final selectedPlace = store.places.selectedPlace;
-    print('selectedPlace');
-    print(store.places.all[store.selectedPlaceId.value]);
 
     return Obx(() => Column(children: [
-          Text(store.selectedPlaceId.value),
-          Text(selectedPlace['_id']),
+          Text(store.places.selectedPlace.value.id),
           Padding(
-              child: Row(children: [Text(selectedPlace['name'][store.lang.lang.value])]),
+              child: Row(children: [Text(store.places.selectedPlace.value.name[store.lang.lang.value])]),
               padding: EdgeInsets.symmetric(horizontal: 20)),
           Padding(
-              child: Row(children: [Text(selectedPlace['address'])]),
+              child: Row(children: [Text(store.places.selectedPlace.value.address)]),
               padding: EdgeInsets.symmetric(horizontal: 20))
         ]));
   }
