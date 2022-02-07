@@ -63,19 +63,14 @@ class _SlidePanel extends State<Panel> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10), color: Colors.black26)),
                     ),
-                    Padding(
-                        child: Row(children: [Text('Place.title')]),
-                        padding: EdgeInsets.symmetric(horizontal: 20)),
-                    Padding(
-                        child: Row(children: [Text('Place.address')]),
-                        padding: EdgeInsets.symmetric(horizontal: 20))
+                    PlaceCard['Header']
                   ],
                 )),
             panel: Padding(
                 padding: EdgeInsets.only(top: minPanelHeight),
                 child: SingleChildScrollView(
                     child: Container(
-                  child: Column(children: [PlaceCard()]),
+                  child: Column(children: [PlaceCard['Body']]),
                 ))),
             body: Obx(() => store.location.lat.value != 0.0 ? Map() : Map())),
         length: 3);
