@@ -35,11 +35,13 @@ class _SlidePanel extends State<Panel> {
   @override
   Widget build(BuildContext context) {
     var deviceHeight = MediaQuery.of(context).size.height;
+    var deviceWidth = MediaQuery.of(context).size.width;
+    final double minPanelHeight = 80;
 
     return DefaultTabController(
         child: SlidingUpPanel(
             controller: panelController,
-            minHeight: 30,
+            minHeight: minPanelHeight,
             maxHeight: deviceHeight * 0.8,
             // snapPoint: 0.3,
             color: Colors.white,
@@ -49,26 +51,32 @@ class _SlidePanel extends State<Panel> {
             onPanelClosed: () {},
             margin: EdgeInsets.only(left: 0, right: 0),
             borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-            panel: SingleChildScrollView(
-                child: Container(
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            header: SizedBox(
+                width: deviceWidth,
+                child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+                      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
                       child: Container(
                           height: 5,
                           width: 40,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10), color: Colors.black26)),
-                    )
+                    ),
+                    Padding(
+                        child: Row(children: [Text('Place.title')]),
+                        padding: EdgeInsets.symmetric(horizontal: 20)),
+                    Padding(
+                        child: Row(children: [Text('Place.address')]),
+                        padding: EdgeInsets.symmetric(horizontal: 20))
                   ],
-                ),
-                SizedBox(height: 20),
-                PlaceCard()
-              ]),
-            )),
+                )),
+            panel: Padding(
+                padding: EdgeInsets.only(top: minPanelHeight),
+                child: SingleChildScrollView(
+                    child: Container(
+                  child: Column(children: [PlaceCard()]),
+                ))),
             body: Obx(() => store.location.lat.value != 0.0 ? Map() : Map())),
         length: 3);
   }

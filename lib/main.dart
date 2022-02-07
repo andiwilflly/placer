@@ -10,6 +10,10 @@ import 'package:placer/translations.dart';
 import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 
+// TODO: Fix cocoa pods:
+// For me this was resolved by opening the Android studio from terminal
+// open /Applications/Android\ Studio.app
+
 // flutter build web --web-renderer html/canvaskit
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +23,8 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   store.auth.firebaseAuthStateChanges();
 
-  store.lang.setLang(Get.deviceLocale.toString());
+  store.lang
+      .setLang(store.lang.languages[Get.deviceLocale] != null ? Get.deviceLocale.toString() : 'en_US');
 
   // await DotEnv().load();
   // await dotenv.load(fileName: ".env");
@@ -82,12 +87,14 @@ class RouterState extends State<Router> with WidgetsBindingObserver {
         title: 'placer.io',
         theme: ThemeData(primarySwatch: Colors.orange),
         translations: Messages(),
-        locale: Get.deviceLocale,
-        fallbackLocale: Locale('uk', 'UA'),
+        locale: store.lang.languages[Get.deviceLocale] != null ? Get.deviceLocale : Locale('en', 'US'),
+        fallbackLocale: Locale('en', 'US'),
         initialRoute: '/home',
         getPages: [
-          GetPage(name: '/home', page: () => Layout(children: HomePage()), transition: Transition.native),
-          GetPage(name: '/admin', page: () => Layout(children: AdminPage()), transition: Transition.native)
+          GetPage(
+              name: '/home', page: () => Layout(children: HomePage()), transition: Transition.native),
+          GetPage(
+              name: '/admin', page: () => Layout(children: AdminPage()), transition: Transition.native)
         ]);
   }
 }

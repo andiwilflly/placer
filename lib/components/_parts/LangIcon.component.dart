@@ -7,6 +7,8 @@ import 'package:placer/models/store.dart';
 class LangIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    print(store.lang.lang.toString());
     return IconButton(
       icon: Container(
         decoration: BoxDecoration(

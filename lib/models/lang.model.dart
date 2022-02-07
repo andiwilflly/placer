@@ -11,12 +11,10 @@ class LangModel {
     'ru_RU': {'icon': FlagsCode.RU, 'name': 'RU', 'code': Locale('ru', 'RU')}
   };
 
-  // List<String> languages = ['ru_RU', 'en_EN', 'ua_UA'];
-
-  dynamic lang = ''.obs;
+  dynamic lang = 'en_US'.obs;
 
   void setLang(String newLang) {
     print('set lang: ${newLang}');
-    lang.value = newLang;
+    //lang.value = newLang;
   }
 }
