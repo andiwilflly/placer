@@ -9,7 +9,6 @@ import 'package:placer/models/store.dart';
 import 'package:placer/translations.dart';
 import 'package:flutter/services.dart';
 import 'firebase_options.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // flutter build web --web-renderer html/canvaskit
 void main() async {
@@ -22,7 +21,8 @@ void main() async {
 
   store.lang.setLang(Get.deviceLocale.toString());
 
-  await dotenv.load(fileName: ".env");
+  // await DotEnv().load();
+  // await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

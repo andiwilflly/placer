@@ -2,6 +2,8 @@ import 'package:flag/flag.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Fallback lang if not lang detected !!
+// TODO: uk_US
 class LangModel {
   Map languages = {
     'en_US': {'icon': FlagsCode.GB, 'name': 'EN', 'code': Locale('en', 'US')},

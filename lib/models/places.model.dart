@@ -1,6 +1,4 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
@@ -8,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:placer/components/place/PlaceMarker.component.dart';
 import 'dart:convert' as convert;
-
 import 'package:placer/models/store.dart';
 import 'package:placer/utils/isPointInPolygon.utils.dart';
 
-final String? HOST = dotenv.env['SERVER_HOST'];
-final String? PORT = dotenv.env['SERVER_PORT'];
+// final String? HOST = DotEnv().env['SERVER_HOST'];
+final String? HOST = 'http://localhost';
+// final String? PORT = DotEnv().env['SERVER_PORT'];
+final String? PORT = '4000';
 
 class PlacesModel {
   final GetStorage all = GetStorage();
