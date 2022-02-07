@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:placer/components/Layout.component.dart';
 import 'package:placer/components/pages/AdminPage.component.dart';
@@ -18,7 +17,6 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await GetStorage.init();
   // Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   store.auth.firebaseAuthStateChanges();

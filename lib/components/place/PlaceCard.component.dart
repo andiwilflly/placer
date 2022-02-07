@@ -2,19 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flag/flag.dart';
 import 'package:placer/components/place/PlaceCarousel.component.dart';
 import 'package:placer/components/place/PlaceHistory.component.dart';
+import 'package:get/get.dart';
 import 'package:placer/models/store.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:placer/components/LangSelection.component.dart';
 
 class PlaceCardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Padding(
-          child: Row(children: [Text('Place.title')]), padding: EdgeInsets.symmetric(horizontal: 20)),
-      Padding(
-          child: Row(children: [Text('Place.address')]), padding: EdgeInsets.symmetric(horizontal: 20))
-    ]);
+    final selectedPlace = store.places.selectedPlace;
+    print('selectedPlace');
+    print(store.places.all[store.selectedPlaceId.value]);
+
+    return Obx(() => Column(children: [
+          Text(store.selectedPlaceId.value),
+          Text(selectedPlace['_id']),
+          Padding(
+              child: Row(children: [Text(selectedPlace['name'][store.lang.lang.value])]),
+              padding: EdgeInsets.symmetric(horizontal: 20)),
+          Padding(
+              child: Row(children: [Text(selectedPlace['address'])]),
+              padding: EdgeInsets.symmetric(horizontal: 20))
+        ]));
   }
 }
 
@@ -25,4 +32,4 @@ class PlaceCardBody extends StatelessWidget {
   }
 }
 
-Map PlaceCard = {'Header': PlaceCardHeader(), 'Body': PlaceCardBody() };
+Map PlaceCard = {'Header': PlaceCardHeader(), 'Body': PlaceCardBody()};

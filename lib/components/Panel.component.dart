@@ -63,14 +63,15 @@ class _SlidePanel extends State<Panel> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10), color: Colors.black26)),
                     ),
-                    PlaceCard['Header']
+                    Obx(() => store.selectedPlaceId == '' ? Column() : PlaceCard['Header'] )
                   ],
                 )),
             panel: Padding(
                 padding: EdgeInsets.only(top: minPanelHeight),
                 child: SingleChildScrollView(
                     child: Container(
-                  child: Column(children: [PlaceCard['Body']]),
+                  child: Obx(() =>
+                      store.selectedPlaceId == '' ? Column() : Column(children: [PlaceCard['Body']])),
                 ))),
             body: Obx(() => store.location.lat.value != 0.0 ? Map() : Map())),
         length: 3);

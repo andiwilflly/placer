@@ -1,4 +1,3 @@
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
@@ -14,8 +13,12 @@ final String? HOST = 'http://localhost';
 // final String? PORT = DotEnv().env['SERVER_PORT'];
 final String? PORT = '4000';
 
-class PlacesModel {
-  final GetStorage all = GetStorage();
+class PlacesModel extends GetxController {
+  final RxMap all = {}.obs;
+
+  get selectedPlace {
+    return all[store.selectedPlaceId.value];
+  }
 
   void getAll() async {
     print('$HOST:$PORT/api/places');
@@ -28,9 +31,11 @@ class PlacesModel {
 
     print('places:');
     print(jsonResponse.length);
-    for (var place in jsonResponse) {
-      all.write(place['_id'], place);
-    }
+
+    all.addAll(Map.fromIterable(jsonResponse, key: (place) => place['_id'], value: (place) => place));
+    // for (var place in jsonResponse) {
+    //   all[place['_id']];
+    // }
   }
 
   create(RxMap<dynamic, dynamic> place) async {
@@ -46,17 +51,17 @@ class PlacesModel {
     print('creada? ~$jsonResponse');
   }
 
-  bool filterPolygons(String placeId) {
-    return store.places.all.read(placeId)['polygon'].length > 1;
+  bool filterPolygons(dynamic placeId) {
+    return all[placeId]['polygon'].length > 1;
   }
 
-  bool filterMarkers(String placeId) {
-    return store.places.all.read(placeId)['polygon'].length == 1;
+  bool filterMarkers(dynamic placeId) {
+    return all[placeId]['polygon'].length == 1;
   }
 
   String? getPlaceIdByLatLng(LatLng latLng) {
-    final String placeId = all.getKeys().firstWhere((placeId) {
-      final place = all.read(placeId);
+    final String placeId = all.value.keys.firstWhere((placeId) {
+      final place = all[placeId];
       return isPointInPolygon(
           latLng,
           Polygon(
@@ -69,21 +74,18 @@ class PlacesModel {
   }
 
   List<Polygon> get polygons {
-    return List<Polygon>.from(store.places.all
-        .getKeys()
+    return List<Polygon>.from(all.value.keys
         .where(filterPolygons)
         .map((placeId) => Polygon(
-            points: List<LatLng>.from(store.places.all
-                .read(placeId)['polygon']
-                .map((point) => LatLng(point[0], point[1]))
-                .toList()),
+            points: List<LatLng>.from(
+                all[placeId]['polygon'].map((point) => LatLng(point[0], point[1])).toList()),
             color: Colors.red))
         .toList());
   }
 
   List<Marker> get markers {
-    return List<Marker>.from(store.places.all.getKeys().where(filterMarkers).map((placeId) {
-      final place = store.places.all.read(placeId);
+    return List<Marker>.from(all.value.keys.where(filterMarkers).map((placeId) {
+      final place = store.places.all[placeId];
       return IPlaceMarker(
           id: place['_id'],
           title: place['name'][store.lang.lang.value],
@@ -94,7 +96,6 @@ class PlacesModel {
     }).toList());
   }
 }
-
 
 class IPlace {
   String _id = '';
