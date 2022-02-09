@@ -33,7 +33,6 @@ class Layout extends StatelessWidget {
                   splashRadius: 0.1,
                   icon: Icon(Icons.search),
                   onPressed: () {
-                    print('saerch');
                     showSearch(
                       context: context,
                       delegate: PlacesSearch(),

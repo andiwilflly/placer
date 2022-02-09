@@ -1,6 +1,7 @@
 import 'package:placer/components/_parts/PreLoader.component.dart';
 import 'package:placer/components/_parts/Search.component.dart';
 import 'package:placer/components/place/PlaceCard.component.dart';
+import 'package:placer/components/place/PlacesList.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class _SlidePanel extends State<Panel> {
                 child: SingleChildScrollView(
                     child: Container(
                   child: Obx(() => store.places.selectedPlace == null
-                      ? Column()
+                      ? Column(children: [PlacesList(places: store.places.closestPlaces)])
                       : Column(children: [PlaceCard['Body']])),
                 ))),
             body: Obx(() => store.location.lat.value == 0.0 ? PreLoader() : Map())),

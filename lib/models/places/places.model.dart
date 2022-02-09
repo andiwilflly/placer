@@ -17,7 +17,7 @@ final String? PORT = '4000';
 
 class PlacesModel {
   RxString selectedPlaceId = ''.obs; // For subscription in Panel component
-  final RxList all = [].obs;
+  final RxList all = <Rx<IPlace>>[].obs;
 
   find(String placeId) => all.firstWhere((place) => place.value.id == placeId, orElse: () => null);
 
@@ -31,11 +31,11 @@ class PlacesModel {
       place.update((place) => place.isSelected = place.id == placeId);
     });
 
-    if(placeId == null) return;
+    if (placeId == null) return;
     IPlace place = store.places.selectedPlace.value;
     print(place.lat);
     print(store.map.zoom.value);
-    store.map.controller.move(LatLng(place.lat, place.long), store.map.zoom.value);
+    store.map.controller.move(LatLng(place.lat * 0.99996, place.long), store.map.zoom.value);
   }
 
   void getAll() async {
@@ -91,6 +91,12 @@ class PlacesModel {
       return isPointInPolygon(latLng, toPolygon(place));
     }, orElse: () => null);
     return place == null ? null : place.value.id;
+  }
+
+  List<IPlace> get closestPlaces {
+    List<IPlace> places = List<IPlace>.from(all.map((place) => place.value).toList());
+    places.sort((a, b) => a.distance.compareTo(b.distance));
+    return places;
   }
 
   List<Polygon> get polygons {
