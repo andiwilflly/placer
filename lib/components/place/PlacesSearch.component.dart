@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuzzy/fuzzy.dart';
+import 'package:placer/components/place/PlaceCardShort.component.dart';
 import 'package:placer/models/store.dart';
 
 class PlacesSearch extends SearchDelegate {
@@ -38,7 +39,7 @@ class PlacesSearch extends SearchDelegate {
 
   Widget search(String query) {
     final names = store.places.all.map((place) {
-      return place['name'][store.lang.lang.value];
+      return place.value.name[store.lang.lang.value];
     }).toList();
 
     final fuse =
@@ -50,10 +51,7 @@ class PlacesSearch extends SearchDelegate {
         itemCount: results.length,
         itemBuilder: (context, index) {
           final placeIndex = results[index].matches[0].arrayIndex;
-          print(store.places.all[placeIndex]);
-          return ListTile(
-            title: Text('Title'),
-          );
+          return PlaceCardShort(placeId: store.places.all[placeIndex].value.id);
         });
   }
 }

@@ -26,9 +26,6 @@ class Layout extends StatelessWidget {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-            title: Obx(() => store.places.selectedPlace == null
-                ? Text('no place selected')
-                : Text(store.places.selectedPlace.value.id)),
             leading: LangIcon(),
             elevation: 0,
             actions: [

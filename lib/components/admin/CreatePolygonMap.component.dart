@@ -120,7 +120,6 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                               IPlaceMarker(
                                   id: 'ID',
                                   title: 'NAME',
-                                  vicinity: "vicinity",
                                   lat: placesFormModel.form['polygon'][0][0],
                                   long: placesFormModel.form['polygon'][0][1],
                                   icon: Icons.place)

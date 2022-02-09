@@ -10,7 +10,6 @@ class IPlaceMarker extends Marker {
       required this.lat,
       required this.title,
       required this.long,
-      required this.vicinity,
       required this.icon})
       : super(
           anchorPos: AnchorPos.align(AnchorAlign.top),
@@ -23,7 +22,6 @@ class IPlaceMarker extends Marker {
               // Get.back();
               // Get.snackbar(
               //   title,
-              //   vicinity,
               //   icon: Icon(icon),
               //   // titleText: Text(title),
               //   mainButton: TextButton(child: Text('Close'), onPressed: () => Get.back()),
@@ -39,7 +37,6 @@ class IPlaceMarker extends Marker {
 
   final String id;
   final IconData icon;
-  final String vicinity;
   final String title;
   final double lat;
   final double long;

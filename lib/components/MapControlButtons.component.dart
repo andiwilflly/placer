@@ -9,29 +9,29 @@ class MapControlButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
-      new Positioned(
-          right: 15.0,
-          top: 35.0,
-          child: IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Search'.tr,
-            iconSize: 30,
-            onPressed: () async {
-              store.notifications.send('hehe', 'net?');
-            },
-          )),
-      new Positioned(
-          right: 15.0,
-          top: 85.0,
-          child: IconButton(
-            icon: const Icon(Icons.api),
-            iconSize: 30,
-            onPressed: () {
-              store.map.controller.move(
-                  LatLng(store.location.lat.value, store.location.long.value),
-                  store.map.zoom.value);
-            },
-          )),
+      // new Positioned(
+      //     right: 15.0,
+      //     top: 35.0,
+      //     child: IconButton(
+      //       icon: const Icon(Icons.search),
+      //       tooltip: 'Search'.tr,
+      //       iconSize: 30,
+      //       onPressed: () async {
+      //         store.notifications.send('hehe', 'net?');
+      //       },
+      //     )),
+      // new Positioned(
+      //     right: 15.0,
+      //     top: 85.0,
+      //     child: IconButton(
+      //       icon: const Icon(Icons.api),
+      //       iconSize: 30,
+      //       onPressed: () {
+      //         store.map.controller.move(
+      //             LatLng(store.location.lat.value, store.location.long.value),
+      //             store.map.zoom.value);
+      //       },
+      //     )),
     ]);
   }
 }

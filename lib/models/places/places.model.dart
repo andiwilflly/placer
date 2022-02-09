@@ -10,11 +10,13 @@ import 'package:placer/models/store.dart';
 import 'package:placer/utils/isPointInPolygon.utils.dart';
 
 // final String? HOST = DotEnv().env['SERVER_HOST'];
-final String? HOST = 'http://localhost';
+// final String? HOST = 'http://localhost';
+final String? HOST = 'http://167.71.12.148';
 // final String? PORT = DotEnv().env['SERVER_PORT'];
 final String? PORT = '4000';
 
 class PlacesModel {
+  RxString selectedPlaceId = ''.obs; // For subscription in Panel component
   final RxList all = [].obs;
 
   find(String placeId) => all.firstWhere((place) => place.value.id == placeId, orElse: () => null);
@@ -23,10 +25,17 @@ class PlacesModel {
     return all.firstWhere((place) => place.value.isSelected, orElse: () => null);
   }
 
-  dynamic selectPlace(String? placeId) {
+  void selectPlace(String? placeId) {
+    selectedPlaceId.value = placeId == null ? '' : placeId;
     all.forEach((place) {
       place.update((place) => place.isSelected = place.id == placeId);
     });
+
+    if(placeId == null) return;
+    IPlace place = store.places.selectedPlace.value;
+    print(place.lat);
+    print(store.map.zoom.value);
+    store.map.controller.move(LatLng(place.lat, place.long), store.map.zoom.value);
   }
 
   void getAll() async {
@@ -47,17 +56,15 @@ class PlacesModel {
         name: placeObj['name'],
         description: placeObj['description'],
         address: placeObj['address'],
-        images: placeObj['images'],
-        videos: placeObj['videos'],
-        polygon: placeObj['polygon'],
+        images: List<String>.from(placeObj['images']),
+        videos: List<String>.from(placeObj['videos']),
+        polygon: convertPolygon(placeObj['polygon']),
       ).obs;
       all.add(place);
     }
   }
 
   create(RxMap<dynamic, dynamic> place) async {
-    print(convert.json.encode(place));
-
     var response = await http.post(Uri.parse('$HOST:$PORT/api/places'),
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -69,11 +76,15 @@ class PlacesModel {
   }
 
   bool filterPolygons(dynamic place) => place.value.polygon.length > 1;
+
   bool filterMarkers(dynamic place) => place.value.polygon.length == 1;
+
+  List<List<double>> convertPolygon(List<dynamic> polygon) =>
+      List<List<double>>.from(polygon.map((dynamic latLng) => List<double>.from(latLng)).toList());
 
   Polygon toPolygon(Rx<IPlace> place) => Polygon(
       points: List<LatLng>.from(place.value.polygon.map((point) => LatLng(point[0], point[1])).toList()),
-      color: Colors.red);
+      color: place.value.isSelected ? Colors.red : Colors.blueAccent);
 
   String? getPlaceIdByLatLng(LatLng latLng) {
     final place = all.firstWhere((place) {
@@ -93,7 +104,6 @@ class PlacesModel {
       return IPlaceMarker(
           id: place.value.id,
           title: place.value.name[store.lang.lang.value],
-          vicinity: "vicinity",
           lat: place.value.polygon[0][0],
           long: place.value.polygon[0][1],
           icon: Icons.place);

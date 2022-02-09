@@ -21,14 +21,14 @@ class _SlidePanel extends State<Panel> {
     store.places.getAll();
     super.initState();
 
-    // selectedPlaceIdDisposer = store.places.selectedPlace.listen((selectedPlace) {
-    //   panelController.animatePanelToPosition(selectedPlace == null ? 0 : 0.4);
-    // });
+    selectedPlaceIdDisposer = store.places.selectedPlaceId.listen((selectedPlaceId) {
+      panelController.animatePanelToPosition(selectedPlaceId == '' ? 0 : 0.4);
+    });
   }
 
   @override
   void dispose() {
-    // selectedPlaceIdDisposer.cancel();
+    selectedPlaceIdDisposer.cancel();
     super.dispose();
   }
 
@@ -74,7 +74,7 @@ class _SlidePanel extends State<Panel> {
                       ? Column()
                       : Column(children: [PlaceCard['Body']])),
                 ))),
-            body: Obx(() => store.location.lat.value != 0.0 ? Map() : Map())),
+            body: Obx(() => store.location.lat.value == 0.0 ? PreLoader() : Map())),
         length: 3);
   }
 }

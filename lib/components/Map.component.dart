@@ -1,9 +1,9 @@
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:placer/models/store.dart';
-import 'package:placer/utils/isPointInPolygon.utils.dart';
 
 class Map extends StatefulWidget {
   @override
@@ -17,17 +17,19 @@ class _MapState extends State<Map> {
   }
 
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
+    return Stack(children: [
       Obx(() => FlutterMap(
             mapController: store.map.controller,
             options: MapOptions(
-                // center: LatLng(store.location.lat.value, store.location.long.value),
-                center: LatLng(50.4402216, 30.5170319),
+                center: LatLng(store.location.lat.value, store.location.long.value),
+                // center: LatLng(50.4402216, 30.5170319),
                 zoom: store.map.zoom.value,
                 minZoom: 12,
                 maxZoom: 18,
                 interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-                plugins: [],
+                plugins: [
+                  LocationMarkerPlugin()
+                ],
                 onTap: (tapPos, LatLng latLng) {
                   store.places.selectPlace(store.places.getPlaceIdByLatLng(latLng));
                 },
@@ -44,6 +46,10 @@ class _MapState extends State<Map> {
                 // 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
                 // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: ['a', 'b', 'c'],
+              ),
+              LocationMarkerLayerOptions(
+                marker: DefaultLocationMarker(),
+                headingSectorRadius: 30,
               ),
               PolygonLayerOptions(polygons: store.places.polygons),
               MarkerLayerOptions(markers: store.places.markers),
