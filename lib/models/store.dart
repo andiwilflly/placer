@@ -4,7 +4,7 @@ import "package:placer/models/lang.model.dart";
 import 'package:placer/models/location.model.dart';
 import 'package:placer/models/map.model.dart';
 import 'package:placer/models/places/places.model.dart';
-import 'package:placer/notifications/init.notifications.dart';
+import 'package:placer/services/notifications.service.dart';
 
 class Store {
   RxBool isProjectReady = false.obs;

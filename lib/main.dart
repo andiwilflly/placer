@@ -5,6 +5,7 @@ import 'package:placer/components/Layout.component.dart';
 import 'package:placer/components/pages/AdminPage.component.dart';
 import 'package:placer/components/pages/HomePage.component.dart';
 import 'package:placer/models/store.dart';
+import 'package:placer/services/background.service.dart';
 import 'package:placer/translations.dart';
 import 'package:flutter/services.dart';
 import 'firebase_options.dart';
@@ -20,6 +21,8 @@ void main() async {
   // Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   store.auth.firebaseAuthStateChanges();
+
+  initializeBackgroundService();
 
   store.lang
       .setLang(store.lang.languages[Get.deviceLocale] != null ? Get.deviceLocale.toString() : 'en_US');
@@ -62,6 +65,7 @@ class RouterState extends State<Router> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
+    print(state);
     store.setIsAppInForeground(state == AppLifecycleState.resumed);
   }
 

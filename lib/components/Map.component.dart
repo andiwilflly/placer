@@ -24,12 +24,10 @@ class _MapState extends State<Map> {
                 center: LatLng(store.location.lat.value, store.location.long.value),
                 // center: LatLng(50.4402216, 30.5170319),
                 zoom: store.map.zoom.value,
-                minZoom: 12,
+                minZoom: 9,
                 maxZoom: 18,
                 interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-                plugins: [
-                  LocationMarkerPlugin()
-                ],
+                plugins: [LocationMarkerPlugin()],
                 onTap: (tapPos, LatLng latLng) {
                   store.places.selectPlace(store.places.getPlaceIdByLatLng(latLng));
                 },
@@ -47,10 +45,8 @@ class _MapState extends State<Map> {
                 // 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: ['a', 'b', 'c'],
               ),
-              LocationMarkerLayerOptions(
-                marker: DefaultLocationMarker(),
-                headingSectorRadius: 30,
-              ),
+              if (store.isAppInForeground.value == true)
+                LocationMarkerLayerOptions(marker: DefaultLocationMarker(), headingSectorRadius: 30),
               PolygonLayerOptions(polygons: store.places.polygons),
               MarkerLayerOptions(markers: store.places.markers),
             ],

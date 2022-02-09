@@ -69,6 +69,7 @@ class _SlidePanel extends State<Panel> {
                 )),
             panel: Padding(
                 padding: EdgeInsets.only(top: minPanelHeight),
+                // TODO: implement CustomScrollView
                 child: SingleChildScrollView(
                     child: Container(
                   child: Obx(() => store.places.selectedPlace == null

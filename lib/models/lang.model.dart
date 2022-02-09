@@ -15,6 +15,6 @@ class LangModel {
 
   void setLang(String newLang) {
     print('set lang: ${newLang}');
-    //lang.value = newLang;
+    lang.value = newLang;
   }
 }
