@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flag/flag.dart';
-import 'package:placer/components/LangSelection.component.dart';
 import 'package:placer/components/Login.component.dart';
 import 'package:placer/components/_parts/LangIcon.component.dart';
 import 'package:placer/components/_parts/PreLoader.component.dart';
 import 'package:placer/components/place/PlacesSearch.component.dart';
 import 'package:placer/models/store.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:placer/services/image.service.dart';
 
 class Layout extends StatelessWidget {
   const Layout({
@@ -51,7 +50,7 @@ class Layout extends StatelessWidget {
                   : Column(children: [])),
               Obx(() => store.auth.isAuth == true
                   ? IconButton(splashRadius: 0.1, icon: Icon(Icons.logout), onPressed: store.auth.logOut)
-                  : Row(children: [])),
+                  : Row(children: []))
             ],
             backgroundColor: Colors.transparent),
         body: Obx(() => store.isProjectReady == true

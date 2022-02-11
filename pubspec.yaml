@@ -56,6 +56,9 @@ dependencies:
   video_player: ^2.2.16
   fuzzy: ^0.3.0
   flutter_background_service: ^0.2.4
+  firebase_storage: ^10.2.7
+  mime_type: ^1.0.0
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:placer/models/store.dart';
 
 class NotificationsModel {
   late FlutterLocalNotificationsPlugin flutterNotificationPlugin;
 
   init() {
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings('app_icon');
+    var initializationSettingsAndroid = new AndroidInitializationSettings('app_icon');
 
     var initializationSettingsIOS = new IOSInitializationSettings();
 
@@ -16,6 +17,11 @@ class NotificationsModel {
 
     flutterNotificationPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
+
+    new Timer.periodic(const Duration(seconds: 10), (Timer timer) {
+      print('again');
+      //store.notifications.send('sewqe', DateTime.now().millisecondsSinceEpoch.toString());
+    });
   }
 
   send(String title, String text) {
@@ -28,17 +34,10 @@ class NotificationsModel {
 
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
 
-    var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
+    var platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
 
-    flutterNotificationPlugin.show(
-        0,
-        title,
-        text,
-        platformChannelSpecifics,
-        payload: 'No Sound'
-    );
+    flutterNotificationPlugin.show(0, title, text, platformChannelSpecifics, payload: 'No Sound');
   }
 
   onSelectNotification(dynamic payload) async {

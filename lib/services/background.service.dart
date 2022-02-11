@@ -1,8 +1,11 @@
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:async';
 
 Future<void> initializeBackgroundService() async {
+  if(kIsWeb) return;
+
   final service = FlutterBackgroundService();
   await service.configure(
     androidConfiguration: AndroidConfiguration(

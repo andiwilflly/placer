@@ -64,7 +64,7 @@ class _SlidePanel extends State<Panel> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10), color: Colors.black26)),
                     ),
-                    Obx(() => store.places.selectedPlace == null ? Column() : PlaceCard['Header'])
+                    Obx(() => store.places.selectedPlace == null ? Column() : PlaceCard['Header']),
                   ],
                 )),
             panel: Padding(
