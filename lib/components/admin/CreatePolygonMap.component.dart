@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:get/get.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:placer/components/_parts/Input.component.dart';
 import 'package:placer/components/place/PlaceMarker.component.dart';
 import 'package:placer/models/placeForm.model.dart';
+import 'package:placer/models/store.dart';
 
 class CreatePolygonMap extends StatefulWidget {
   @override
@@ -19,8 +20,8 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
   late bool _isShowMarkers;
 
   RxMap form = {
-    'lat': placesFormModel.getPolygon()[0].latitude,
-    'long': placesFormModel.getPolygon()[0].longitude,
+    'lat': store.location.lat.value,
+    'long': store.location.long.value,
     'isDrawPolygon': false,
     'polygonColor': Colors.blue.withOpacity(0.4),
     'polygonDotColor': Colors.blue,
@@ -92,7 +93,7 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                       zoom: 16,
                       maxZoom: 18.25,
                       interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-                      plugins: [],
+                      plugins: [LocationMarkerPlugin()],
                       onTap: (TapPosition, latLng) {
                         placesFormModel.form['polygon'].add([latLng.latitude, latLng.longitude]);
                       },
@@ -111,6 +112,8 @@ class CreatePolygonMapState extends State<CreatePolygonMap> {
                         return Obx(() => Text(form['lat'].toString() + ' / ' + form['long'].toString()));
                       },
                     ),
+                    if (store.isAppInForeground.value == true)
+                      LocationMarkerLayerOptions(marker: DefaultLocationMarker(), headingSectorRadius: 30),
                     PolygonLayerOptions(polygons: [
                       Polygon(points: placesFormModel.getPolygon(), color: form['polygonColor'])
                     ]),

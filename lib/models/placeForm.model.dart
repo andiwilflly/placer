@@ -4,6 +4,7 @@ import 'package:placer/models/places/places.model.dart';
 
 class PlacesFormModel {
   RxMap form = {
+    "uuid": '',
     "name": {}.obs,
     "description": {}.obs,
     "images": [].obs,

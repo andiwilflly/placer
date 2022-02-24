@@ -61,6 +61,7 @@ class PlacesModel {
         polygon: convertPolygon(placeObj['polygon']),
       ).obs;
       all.add(place);
+      
     }
   }
 

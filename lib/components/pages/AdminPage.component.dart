@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:placer/components/_parts/PreLoader.component.dart';
 import 'package:placer/components/admin/CreatePolygonMap.component.dart';
 import 'package:placer/components/admin/PlaceForm.component.dart';
 import 'package:placer/models/placeForm.model.dart';
 import 'dart:convert';
+
+import 'package:placer/models/store.dart';
 
 class AdminPage extends StatelessWidget {
   @override
@@ -19,7 +22,7 @@ class AdminPage extends StatelessWidget {
                 Expanded(
                   flex: 4,
                   child: Column(children: [
-                    CreatePolygonMap(),
+                    Obx(() => store.location.lat.value == 0.0 ? PreLoader() : CreatePolygonMap()),
                     PlaceForm()
                   ]),
                 ),

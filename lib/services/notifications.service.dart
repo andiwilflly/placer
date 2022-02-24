@@ -18,10 +18,10 @@ class NotificationsModel {
     flutterNotificationPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
 
-    new Timer.periodic(const Duration(seconds: 10), (Timer timer) {
-      print('again');
-      //store.notifications.send('sewqe', DateTime.now().millisecondsSinceEpoch.toString());
-    });
+    // new Timer.periodic(const Duration(seconds: 10), (Timer timer) {
+    //   print('again');
+    //   //store.notifications.send('sewqe', DateTime.now().millisecondsSinceEpoch.toString());
+    // });
   }
 
   send(String title, String text) {

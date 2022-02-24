@@ -17,7 +17,8 @@ class ImageService {
 
   static Future<String?> uploadFileToFirebase(String placeUuid, XFile file) async {
     FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref = storage.ref().child('places/$placeUuid/$generateUuid()');
+    String imageUuid = generateUuid();
+    Reference ref = storage.ref().child('places/$placeUuid/$imageUuid');
 
     File imageFile = File(file.path);
     String? mimeType = mime(file.path) == null ? 'image/png' : mime(file.path);
@@ -25,26 +26,27 @@ class ImageService {
     print('mimeType: $mimeType');
     print('file.path: ${file.path}');
 
-    String? url = null;
+    String? imageUrl = null;
 
     try {
       TaskSnapshot taskSnapshot = kIsWeb
           ? await ref.putData(await file.readAsBytes(), SettableMetadata(contentType: mimeType))
           : await ref.putFile(imageFile, SettableMetadata(contentType: mimeType));
-
-      url = await taskSnapshot.ref.getDownloadURL();
+      imageUrl = await ref.getDownloadURL();
     } on FirebaseException catch (error) {
       print(error);
+      imageUrl = null;
+      return null;
     }
 
-    return url;
+    return imageUrl;
   }
 
-  // static Future<Widget> _getImage(BuildContext context, String imageName) async {
-  //   Image image;
-  //   await FirebaseStorage.loadImage(context, imageName).then((value) {
-  //     image = Image.network(value.toString(), fit: BoxFit.scaleDown);
-  //   });
-  //   return image;
-  // }
+// static Future<Widget> _getImage(BuildContext context, String imageName) async {
+//   Image image;
+//   await FirebaseStorage.loadImage(context, imageName).then((value) {
+//     image = Image.network(value.toString(), fit: BoxFit.scaleDown);
+//   });
+//   return image;
+// }
 }
